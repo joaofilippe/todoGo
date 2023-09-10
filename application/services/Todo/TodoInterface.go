@@ -1,4 +1,4 @@
-package Todo
+package todo
 
 import "todoGo/application/domain/models"
 
@@ -9,3 +9,4 @@ type ITodoService interface {
 type ITodoRepository interface {
 	Create(todo *models.Todo) (int, error)
 }
+
