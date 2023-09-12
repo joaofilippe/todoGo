@@ -1,7 +1,8 @@
 package postgres
 
 import (
-	"todoGo/adapters/repository/postgres/dto"
+	"fmt"
+
 	application "todoGo/application/domain/models"
 )
 
@@ -9,12 +10,24 @@ type TodoRepository struct {
 	Connection *Connection
 }
 
-func (r *TodoRepository) Create(application.Todo t) (int64, error) {
-	var todo dto.TodoDTO
+func (r *TodoRepository) Create(t application.Todo) (int64, error) {
+	fmt.Println("Create")
 
-	todo = todo.ToTodoRepositoryModel(t)
-
-
+	getLog()
+	getOutro()
+	getMaisUm()
 
 	return 0, nil
+}
+
+func getLog(){
+	fmt.Println("colocando um log aqui")
+}
+
+func getOutro(){
+	fmt.Println("colocando um outro log aqui")
+}
+
+func getMaisUm(){
+	fmt.Println("colocando um mais um log aqui")
 }

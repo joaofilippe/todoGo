@@ -24,9 +24,7 @@ type Connection struct {
 
 
 func (c *Config) getDsn() string {
-	var dsn string
-
-	dsn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", 
+	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", 
 						c.Host, 
 						c.Port, 
 						c.User, 
