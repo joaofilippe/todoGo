@@ -17,13 +17,13 @@ services:
     volumes: 
       - dbdata:/var/lib/postgresql/data
 
-  go:
-    container_name: go
-    # build the Dockerfile, alternatively use an image.
-    build:
-      context: .
-    depends_on:
-      - "postgres"
+  # go:
+  #   container_name: go
+  #   # build the Dockerfile, alternatively use an image.
+  #   build:
+  #     context: .
+  #   depends_on:
+  #     - "postgres"
 
 volumes:
   dbdata: # create the volume for persisting data.
