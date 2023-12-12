@@ -13,7 +13,11 @@ func CheckEmptyFields(s any) ([]string, error) {
 		return []string{}, errors.New("this object isn't a struct")
 	}
 
-	fieldsNumber := structType.NumField()
+	fieldsNumber := structType.NumField(); 
+	if fieldsNumber == 0 {
+		return []string{}, errors.New("this struct has no fields")
+	}
+
 	structVal := reflect.ValueOf(s)
 	emptyFieldNames := []string{}
 
