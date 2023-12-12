@@ -1,39 +1,12 @@
 package helpers_test
 
 import (
-	"fmt"
 	"testing"
 	"todoGo/common/helpers"
+
+	"gorm.io/gorm/utils/tests"
 )
 
-func Test_ValidateFieldsStruct(t *testing.T) {
-	s := struct {
-		id       int
-		name     string
-		username string
-		password string
-		field    string
-		pointer *string
-	}{
-		1,
-		"João Filippe",
-		"joaofilippe",
-		"",
-		"",
-		nil,
-	}
+func Test_CheckEmptyFields(t *testing.T) {
 
-	r, err := helpers.ValidateFieldsStruct(s)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if len(r) > 0 {
-		err = fmt.Errorf("the fields is empty: ")
-		for i := range r {
-			err = fmt.Errorf("%w %s", err, r[i])
-		}
-
-		t.Error(err)
-	}
 }

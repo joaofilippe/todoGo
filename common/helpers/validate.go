@@ -5,8 +5,8 @@ import (
 	"reflect"
 )
 
-// ValidateFieldsStruct returns if there is any empty struct field
-func ValidateFieldsStruct(s any) ([]string, error) {
+// CheckEmptyFields returns if there is any empty struct field
+func CheckEmptyFields(s any) ([]string, error) {
 	structType := reflect.TypeOf(s)
 
 	if !(structType.Kind() == reflect.Struct) {
