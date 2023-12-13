@@ -7,42 +7,81 @@ import (
 
 func Test_CheckEmptyFields(t *testing.T) {
 	tests := []struct {
-		name   string
-		data   any
-		hasErr    bool
+		name        string
+		data        any
+		hasErr      bool
 		emptyFields int
 	}{
 		{
-			name:   "empty string",
-			data:   "",
-			hasErr:    true,
+			name:        "test 1 -empty struct",
+			data:        struct{}{},
+			hasErr:      true,
 			emptyFields: 0,
 		},
 		{
-			name:   "empty struct",
-			data:   struct{}{},
-			hasErr:    true,
+			name:        "test 2 - empty string",
+			data:        "",
+			hasErr:      true,
 			emptyFields: 0,
 		},
 		{
-			name: "empty struct with pointer",
+			name: "test 3 - empty struct with pointer",
 			data: struct {
 				Pointer *[]string
-			}{
-			},
-			hasErr:    false,
+			}{},
+			hasErr:      true,
 			emptyFields: 1,
 		},
 		{
-			name: "struct with one empty field",
+			name: "test 4 - struct with one empty field",
 			data: struct {
-				name    string
-				age     int
+				name string
+				age  int
 			}{
-				name:   "João Filippe",
+				name: "João Filippe",
 			},
-			hasErr:    false,
+			hasErr:      true,
 			emptyFields: 1,
+		},
+		{
+			name: "test 5 - struct with two empty field",
+			data: struct {
+				name  string
+				age   int
+				email string
+			}{
+				name: "João Filippe",
+			},
+			hasErr:      true,
+			emptyFields: 2,
+		},
+		{
+			name: "struct with two empty field, but one is a pointer",
+			data: struct {
+				name        string
+				age         int
+				email       string
+				stringSlice *[]string
+			}{
+				name: "João Filippe",
+				age: 30,
+			},
+			hasErr:      true,
+			emptyFields: 2,
+		},
+		{
+			name: "struct with no empty field",
+			data: struct {
+				name  string
+				age   int
+				email string
+			}{
+				name: "João Filippe",
+				age : 30,
+				email: "joaofilippe@outlook.com",
+			},
+			hasErr:      false,
+			emptyFields: 0,
 		},
 	}
 
