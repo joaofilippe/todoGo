@@ -3,8 +3,8 @@ package postgres
 import (
 	"fmt"
 
-	"gorm.io/gorm"
-	"gorm.io/driver/postgres"	
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 
@@ -19,7 +19,7 @@ type Config struct {
 
 type Connection struct {
 	Config *Config
-	Connection *gorm.DB
+	Connection *sqlx.DB
 }
 
 
@@ -42,7 +42,7 @@ func NewConnection(config *Config) *Connection {
 
 	config.Dsn = config.getDsn()
 
-	db, err := gorm.Open(postgres.Open(config.Dsn), &gorm.Config{})
+	db, err := sqlx.Open("postgres", config.Dsn)
 	if err != nil {
 		return connection
 	}

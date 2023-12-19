@@ -5,12 +5,12 @@ import (
 )
 
 type Todo struct {
-	Id          int64     `gorm:"id"`
-	UserId      int64     `gorm:"user_id"`
-	Title       string    `gorm:"title"`
-	Description string    `gorm:"description"`
-	CreatedAt   time.Time `gorm:"created_at"`
-	UpdatedAt   time.Time `gorm:"updated_at"`
-	Deadline    time.Time `gorm:"deadline"`
-	Status      string    `gorm:"status"`
+	ID          int64     `db:"id"`
+	UserID     int64     `db:"user_id"`
+	Title       string    `db:"title"`
+	Description string    `db:"description"`
+	CreatedAt   time.Time `db:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at"`
+	Deadline    time.Time `db:"deadline"`
+	Status      string    `db:"status"`
 }
