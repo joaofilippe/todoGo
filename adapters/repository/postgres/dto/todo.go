@@ -2,7 +2,7 @@ package dto
 
 import (
 	"time"
-	application "todoGo/application/domain/models"
+	application "github.com/joaofilippe/todoGo/application/domain/models"
 )
 
 type TodoDTO struct {

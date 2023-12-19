@@ -1,6 +1,6 @@
 package user
 
-import "todoGo/application/domain/models"
+import "github.com/joaofilippe/todoGo/application/domain/models"
 
 type UserService struct {
 	UserRepository IUserRepository

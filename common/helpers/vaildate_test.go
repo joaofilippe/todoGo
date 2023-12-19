@@ -2,7 +2,7 @@ package helpers_test
 
 import (
 	"testing"
-	"todoGo/common/helpers"
+	"github.com/joaofilippe/todoGo/common/helpers"
 )
 
 func Test_CheckEmptyFields(t *testing.T) {

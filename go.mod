@@ -1,4 +1,4 @@
-module todoGo
+module github.com/joaofilippe/todoGo
 
 go 1.21.5
 

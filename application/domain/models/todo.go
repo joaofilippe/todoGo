@@ -2,7 +2,7 @@ package models
 
 import (
 	"time"
-	"todoGo/common/enum"
+	"github.com/joaofilippe/todoGo/common/enum"
 )
 
 type Todo struct {
