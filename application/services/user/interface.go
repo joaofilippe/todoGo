@@ -1,11 +1,11 @@
 package user
 
-import "github.com/joaofilippe/todoGo/application/domain/models"
+import userModels "github.com/joaofilippe/todoGo/application/domain/models/user"
 
 type IUserService interface {
-	Create(user *models.User) (int, error)
+	Create(user *userModels.NewUser) (int, error)
 }
 
 type IUserRepository interface {
-	Create(todo *models.User) (int, error)
+	Create(todo *userModels.User) (int, error)
 }

@@ -2,7 +2,8 @@ package dto
 
 import (
 	"time"
-	application "github.com/joaofilippe/todoGo/application/domain/models"
+
+	todoModels "github.com/joaofilippe/todoGo/application/domain/models/todo"
 )
 
 type TodoDTO struct {
@@ -16,7 +17,7 @@ type TodoDTO struct {
 	Status      string
 }
 
-func (d *TodoDTO) ToTodoRepositoryModel(t application.Todo) {
+func (d *TodoDTO) ToTodoRepositoryModel(t todoModels.Todo) {
 	d = &TodoDTO{
 		Id:          t.Id,
 		UserId:      t.UserId,

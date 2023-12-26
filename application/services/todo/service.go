@@ -1,13 +1,13 @@
 package todo
 
-import "github.com/joaofilippe/todoGo/application/domain/models"
+import todoModels "github.com/joaofilippe/todoGo/application/domain/models/todo"
 
 type TodoService struct {
 	TodoService    ITodoService
 	TodoRepository ITodoRepository
 }
 
-func (s *TodoService) Create(todo *models.Todo) (int, error) {
+func (s *TodoService) Create(todo *todoModels.Todo) (int, error) {
 	todoId, err := s.TodoRepository.Create(todo)
 	if err != nil {
 		return 0, err

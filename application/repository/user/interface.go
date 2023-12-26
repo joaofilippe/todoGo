@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/joaofilippe/todoGo/application/domain/models"
+	userModels "github.com/joaofilippe/todoGo/application/domain/models/user"
 )
 type Repository interface {
-	CreateUser(user *models.User) (int, error)
+	CreateUser(user *userModels.User) (int, error)
 }
