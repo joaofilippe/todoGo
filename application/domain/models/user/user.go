@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	Id        uuid.UUID
+	ID        uuid.UUID
 	FirstName string
 	LastName  string
 	Username  string
@@ -16,7 +16,7 @@ type User struct {
 	BirthDate time.Time
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Active   bool
+	Active    bool
 }
 
 type NewUser struct {
