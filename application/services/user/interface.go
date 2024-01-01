@@ -8,7 +8,7 @@ type IUserService interface {
 }
 
 type IUserUtils interface {
-	ValidateLogin(user *userModels.Login) error
-	ValidateUser(user *userModels.NewUser) error
-	GenerateToken(user *userModels.User) (string, error)
+	validateLogin(user *userModels.Login) error
+	validateUser(user *userModels.NewUser) error
+	generateToken(user *userModels.User) (string, error)
 }

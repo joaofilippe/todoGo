@@ -45,7 +45,7 @@ func (s *UserService) CreateUser(newUser *userModels.NewUser) (int, error) {
 }
 
 func (s *UserService) Login(login userModels.Login) (string, error) {
-	if err := s.ValidateLogin(&login); err != nil {
+	if err := s.Utils.validateLogin(&login); err != nil {
 		return "", err
 	}
 
@@ -63,7 +63,7 @@ func (s *UserService) Login(login userModels.Login) (string, error) {
 			return "", errors.New(consts.ErrInvalidPassword)
 		}
 
-		return s.GenerateToken(user)
+		return s.Utils.generateToken(user)
 	}
 
 	user, err := s.UserRepository.GetUserByUsername(login.Username)
@@ -79,5 +79,5 @@ func (s *UserService) Login(login userModels.Login) (string, error) {
 		return "", errors.New(consts.ErrInvalidPassword)
 	}
 
-	return s.GenerateToken(user)
+	return s.Utils.generateToken(user)
 }
