@@ -14,6 +14,7 @@ import (
 type UserService struct {
 	UserRepository userRepo.Repository
 	UserService    IUserService
+	Utils          IUserUtils
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
