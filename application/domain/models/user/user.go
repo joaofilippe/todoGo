@@ -26,3 +26,9 @@ type NewUser struct {
 	Email     string
 	Password  string
 }
+
+type Login struct {
+	Email    string
+	Username string
+	Password string
+}

@@ -42,3 +42,41 @@ func (s *UserService) CreateUser(newUser *userModels.NewUser) (int, error) {
 
 	return s.UserRepository.CreateUser(user)
 }
+
+func (s *UserService) Login(login userModels.Login) (string, error) {
+	if err := s.ValidateLogin(&login); err != nil {
+		return "", err
+	}
+
+	if login.Email != "" {
+		user, err := s.UserRepository.GetUserByEmail(login.Email)
+		if err != nil {
+			return "", err
+		}
+
+		if user.ID == uuid.Nil {
+			return "", errors.New(consts.ErrUserDoesNotExist)
+		}
+
+		if user.Password != login.Password {
+			return "", errors.New(consts.ErrInvalidPassword)
+		}
+
+		return s.GenerateToken(user)
+	}
+
+	user, err := s.UserRepository.GetUserByUsername(login.Username)
+	if err != nil {
+		return "", err
+	}
+
+	if user.ID == uuid.Nil {
+		return "", errors.New(consts.ErrUserDoesNotExist)
+	}
+
+	if user.Password != login.Password {
+		return "", errors.New(consts.ErrInvalidPassword)
+	}
+
+	return s.GenerateToken(user)
+}
