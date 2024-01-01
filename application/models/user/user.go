@@ -13,6 +13,7 @@ type User struct {
 	Username  string
 	Email     string
 	Password  string
+	TodoIDs   []uuid.UUID
 	BirthDate time.Time
 	CreatedAt time.Time
 	UpdatedAt time.Time
