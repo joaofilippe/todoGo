@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	todoModels "github.com/joaofilippe/todoGo/application/domain/models/todo"
+	todoModels "github.com/joaofilippe/todoGo/application/models/todo"
 )
 
 type TodoDTO struct {

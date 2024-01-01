@@ -1,6 +1,6 @@
 package todo
 
-import todoModels "github.com/joaofilippe/todoGo/application/domain/models/todo"
+import todoModels "github.com/joaofilippe/todoGo/application/models/todo"
 
 type ITodoService interface {
 	Create(todo *todoModels.Todo) (int, error)

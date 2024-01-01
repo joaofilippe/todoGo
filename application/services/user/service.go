@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	consts "github.com/joaofilippe/todoGo/application/consts"
-	userModels "github.com/joaofilippe/todoGo/application/domain/models/user"
+	userModels "github.com/joaofilippe/todoGo/application/models/user"
 	userRepo "github.com/joaofilippe/todoGo/application/repository/user"
 )
 

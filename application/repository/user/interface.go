@@ -1,7 +1,7 @@
 package user
 
 import (
-	userModels "github.com/joaofilippe/todoGo/application/domain/models/user"
+	userModels "github.com/joaofilippe/todoGo/application/models/user"
 )
 type Repository interface {
 	GetUserByEmail(email string) (*userModels.User, error)
