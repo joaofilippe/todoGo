@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 
 	common "github.com/joaofilippe/todoGo/common/enum"
+	"github.com/joaofilippe/todoGo/common/logger"
 )
 
 func main() {
@@ -19,4 +20,7 @@ func main() {
 	env := common.ParseToEnviroment(os.Getenv("ENV"))
 	fmt.Println(env)
 
+	logger := logger.NewLogger(logger.LogOptions{})
+
+	logger.InfoF("logando")
 }
