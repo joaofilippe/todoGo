@@ -55,9 +55,9 @@ func getDbConnection(c string) *postgres.Connection {
 	defer conn.Connection.Close()
 	
 	if err := conn.Connection.Ping(); err != nil {
-		log.Fatal(fmt.Sprintf("can't connect to %s database", c))
+		log.Fatalf("can't connect to %s database", c)
 	} else {
-		log.Println(fmt.Sprintf("connected to %s database", c))
+		log.Printf("connected to %s database", c)
 	}
 
 	return conn
