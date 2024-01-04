@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/lib/pq"
 	"github.com/joho/godotenv"
 
 	common "github.com/joaofilippe/todoGo/common/enum"
 	"github.com/joaofilippe/todoGo/common/logger"
 )
-
 func main() {
 	err := godotenv.Load("./config/.env")
 	if err != nil {
@@ -23,4 +23,7 @@ func main() {
 	logger := logger.NewLogger(logger.LogOptions{})
 
 	logger.InfoF("logando")
+
 }
+
+
