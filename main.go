@@ -21,15 +21,15 @@ func main() {
 		Environment: env.ToString(),
 	})
 
-	logger.InfoF("logando")
+	logger.Infof("logando")
 
-	masterConnectionDB := getDbConnection("master")
-	slaveConnectionDB := getDbConnection("slave")
+	masterConnectionDB := getDbConnection("master", logger)
+	slaveConnectionDB := getDbConnection("slave",logger)
 
 	fmt.Println(masterConnectionDB, slaveConnectionDB)
 }
 
-func loadEnv() common.Environment{
+func loadEnv() common.Environment {
 	err := godotenv.Load("./config/.env")
 	if err != nil {
 		log.Fatal("can't load .env file")
@@ -38,28 +38,27 @@ func loadEnv() common.Environment{
 	return common.ParseToEnviroment(os.Getenv("ENV"))
 }
 
-func getDbConnection(c string) *postgres.Connection {
+func getDbConnection(c string, log *logger.Logger) *postgres.Connection {
 	yamlFile, err := os.ReadFile(fmt.Sprintf("./config/%s.yaml", c))
 	if err != nil {
-		log.Fatalf("can't load %s.yaml file", c)
+		log.Fatalf(fmt.Errorf("can't load %s.yaml file", c))
 	}
 
 	configDB := new(postgres.Config)
 
 	err = yaml.Unmarshal(yamlFile, configDB)
 	if err != nil {
-		log.Fatalf("can't unmarshal %s.yaml file", c)
+		log.Fatalf(fmt.Errorf("can't unmarshal %s.yaml file", c))
 	}
 
 	conn := postgres.NewConnection(configDB)
 	defer conn.Connection.Close()
-	
+
 	if err := conn.Connection.Ping(); err != nil {
-		log.Fatalf("can't connect to %s database", c)
+		log.Fatalf(fmt.Errorf("can't connect to %s database", c))
 	} else {
-		log.Printf("connected to %s database", c)
+		log.Infof(fmt.Sprintf("connected to %s database", c))
 	}
 
 	return conn
 }
-
