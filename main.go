@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -10,6 +11,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/joaofilippe/todoGo/adapters/repository/postgres"
+	"github.com/joaofilippe/todoGo/adapters/web"
 	common "github.com/joaofilippe/todoGo/common/enum"
 	"github.com/joaofilippe/todoGo/common/logger"
 )
@@ -27,6 +29,12 @@ func main() {
 	slaveConnectionDB := getDbConnection("slave",logger)
 
 	fmt.Println(masterConnectionDB, slaveConnectionDB)
+
+	server := webserver.NewServer()
+
+	if err := http.ListenAndServe(":8080", server.Router); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func loadEnv() common.Environment {
