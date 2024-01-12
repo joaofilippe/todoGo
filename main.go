@@ -33,7 +33,7 @@ func main() {
 	server := webserver.NewServer()
 
 	if err := http.ListenAndServe(":8080", server.Router); err != nil {
-		log.Fatal(err)
+		logger.Logger.Error(err.Error())
 	}
 }
 

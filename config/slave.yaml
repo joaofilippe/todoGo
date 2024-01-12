@@ -1,5 +1,5 @@
 host: localhost
 port: 5432
 user: joaof
-password: 123456
-dbname: joaof
+password: joaof123
+dbname: todo
