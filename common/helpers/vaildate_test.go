@@ -2,6 +2,7 @@ package helpers_test
 
 import (
 	"testing"
+
 	"github.com/joaofilippe/todoGo/common/helpers"
 )
 
@@ -64,7 +65,7 @@ func Test_CheckEmptyFields(t *testing.T) {
 				stringSlice *[]string
 			}{
 				name: "João Filippe",
-				age: 30,
+				age:  30,
 			},
 			hasErr:      true,
 			emptyFields: 2,
@@ -76,8 +77,8 @@ func Test_CheckEmptyFields(t *testing.T) {
 				age   int
 				email string
 			}{
-				name: "João Filippe",
-				age : 30,
+				name:  "João Filippe",
+				age:   30,
 				email: "joaofilippe@outlook.com",
 			},
 			hasErr:      false,

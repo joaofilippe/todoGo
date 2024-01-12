@@ -1,14 +1,14 @@
 package postgres
 
 import (
-	application "github.com/joaofilippe/todoGo/application/domain/models"
+	todoModels "github.com/joaofilippe/todoGo/application/models/todo"
 )
 
 type TodoRepository struct {
 	Connection *Connection
 }
 
-func (r *TodoRepository) Create(t application.Todo) (int64, error) {
+func (r *TodoRepository) Create(t todoModels.Todo) (int64, error) {
 	// var todo dto.TodoDTO
 
 	// todo = todo.ToTodoRepositoryModel(t)

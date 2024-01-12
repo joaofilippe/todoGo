@@ -7,35 +7,29 @@ import (
 	_ "github.com/lib/pq"
 )
 
-
 type Config struct {
-	Host     string
-	Port     int
-	User     string
-	Password string
-	DBName   string
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	DBName   string `yaml:"dbname"`
 	Dsn      string
-} 
+}
 
 type Connection struct {
-	Config *Config
+	Config     *Config
 	Connection *sqlx.DB
 }
 
-
 func (c *Config) getDsn() string {
-	var dsn string
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		c.Host,
+		c.Port,
+		c.User,
+		c.Password,
+		c.DBName)
 
-	dsn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", 
-						c.Host, 
-						c.Port, 
-						c.User, 
-						c.Password,
-						 c.DBName)
-
-	return dsn
 }
-
 
 func NewConnection(config *Config) *Connection {
 	var connection *Connection
@@ -48,9 +42,9 @@ func NewConnection(config *Config) *Connection {
 	}
 
 	connection = &Connection{
-		Config: config,
+		Config:     config,
 		Connection: db,
 	}
-	
+
 	return connection
 }
