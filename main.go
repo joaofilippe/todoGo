@@ -12,6 +12,8 @@ import (
 
 	"github.com/joaofilippe/todoGo/adapters/repository/postgres"
 	"github.com/joaofilippe/todoGo/adapters/web"
+	"github.com/joaofilippe/todoGo/application"
+	"github.com/joaofilippe/todoGo/application/services/user"
 	common "github.com/joaofilippe/todoGo/common/enum"
 	"github.com/joaofilippe/todoGo/common/logger"
 )
@@ -26,15 +28,24 @@ func main() {
 	logger.Infof("logando")
 
 	masterConnectionDB := getDbConnection("master", logger)
-	slaveConnectionDB := getDbConnection("slave",logger)
+	slaveConnectionDB := getDbConnection("slave", logger)
 
-	fmt.Println(masterConnectionDB, slaveConnectionDB)
+	userUtils := &user.UserUtils{}
+	userService := user.NewUserService(masterConnectionDB, slaveConnectionDB, userUtils, logger)
+	application := application.NewApplication(userService, logger)
 
-	server := webserver.NewServer()
+	server := webserver.NewServer(application)
 
-	if err := http.ListenAndServe(":8080", server.Router); err != nil {
+	var PORT string
+	if PORT = os.Getenv("PORT"); PORT == "" {
+		PORT = "8080"
+	}
+
+	if err := http.ListenAndServe(":"+PORT, server.Router); err != nil {
 		logger.Logger.Error(err.Error())
 	}
+
+	fmt.Println(masterConnectionDB, slaveConnectionDB)
 }
 
 func loadEnv() common.Environment {

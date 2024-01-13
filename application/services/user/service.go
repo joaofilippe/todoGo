@@ -6,15 +6,33 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/joaofilippe/todoGo/adapters/repository/postgres"
 	consts "github.com/joaofilippe/todoGo/application/consts"
 	userModels "github.com/joaofilippe/todoGo/application/models/user"
 	userRepo "github.com/joaofilippe/todoGo/application/repository/user"
+	"github.com/joaofilippe/todoGo/common/logger"
 )
 
+// UserService is a struct for the user service
 type UserService struct {
 	UserRepository userRepo.Repository
 	UserService    IUserService
 	Utils          IUserUtils
+	Logger         *logger.Logger
+}
+
+// NewUserService creates a new user service
+func NewUserService(
+	writer *postgres.Connection,
+	reader *postgres.Connection,
+	utils IUserUtils,
+	logger *logger.Logger,
+) *UserService {
+	return &UserService{
+		UserRepository: userRepo.NewUserRepository(writer, reader),
+		Utils:          utils,
+		Logger:         logger,
+	}
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
@@ -44,6 +62,7 @@ func (s *UserService) CreateUser(newUser *userModels.NewUser) (int, error) {
 	return s.UserRepository.CreateUser(user)
 }
 
+// Login is a usecase to login a user and returns a token
 func (s *UserService) Login(login userModels.Login) (string, error) {
 	if err := s.Utils.validateLogin(&login); err != nil {
 		return "", err
