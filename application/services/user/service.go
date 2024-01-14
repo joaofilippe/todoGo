@@ -6,16 +6,16 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/joaofilippe/todoGo/adapters/repository/postgres"
+	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	consts "github.com/joaofilippe/todoGo/application/consts"
 	userModels "github.com/joaofilippe/todoGo/application/models/user"
 	userRepo "github.com/joaofilippe/todoGo/application/repository/user"
 	"github.com/joaofilippe/todoGo/common/logger"
 )
 
-// UserService is a struct for the user service
-type UserService struct {
-	UserRepository userRepo.Repository
+// Service is a struct for the user service
+type Service struct {
+	UserRepository userRepo.IRepository
 	UserService    IUserService
 	Utils          IUserUtils
 	Logger         *logger.Logger
@@ -27,8 +27,8 @@ func NewUserService(
 	reader *postgres.Connection,
 	utils IUserUtils,
 	logger *logger.Logger,
-) *UserService {
-	return &UserService{
+) *Service {
+	return &Service{
 		UserRepository: userRepo.NewUserRepository(writer, reader),
 		Utils:          utils,
 		Logger:         logger,
@@ -36,7 +36,7 @@ func NewUserService(
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
-func (s *UserService) CreateUser(newUser *userModels.NewUser) (int, error) {
+func (s *Service) CreateUser(newUser *userModels.NewUser) (int, error) {
 	userDB, err := s.UserRepository.GetUserByEmail(newUser.Email)
 	if err != nil {
 		return 0, err
@@ -63,7 +63,7 @@ func (s *UserService) CreateUser(newUser *userModels.NewUser) (int, error) {
 }
 
 // Login is a usecase to login a user and returns a token
-func (s *UserService) Login(login userModels.Login) (string, error) {
+func (s *Service) Login(login userModels.Login) (string, error) {
 	if err := s.Utils.validateLogin(&login); err != nil {
 		return "", err
 	}

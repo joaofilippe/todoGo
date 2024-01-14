@@ -10,7 +10,7 @@ import (
 	_ "github.com/lib/pq"
 	"gopkg.in/yaml.v3"
 
-	"github.com/joaofilippe/todoGo/adapters/repository/postgres"
+	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	"github.com/joaofilippe/todoGo/adapters/web"
 	"github.com/joaofilippe/todoGo/application"
 	"github.com/joaofilippe/todoGo/application/services/user"

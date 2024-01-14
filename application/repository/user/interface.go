@@ -5,18 +5,18 @@ import (
 )
 
 // Repository represents the user repository
-type Repository interface {
-	RepositoryReader
-	RepositoryWriter
+type IRepository interface {
+	IRepositoryReader
+	IRepositoryWriter
 }
 
 // RepositoryWriter represents the user repository writer
-type RepositoryWriter interface {
+type IRepositoryWriter interface {
 	CreateUser(user *userModels.User) (int, error)
 }
 
 // RepositoryReader represents the user repository reader
-type RepositoryReader interface {
+type IRepositoryReader interface {
 	GetUserByUsername(username string) (*userModels.User, error)
 	GetUserByEmail(email string) (*userModels.User, error)
 }

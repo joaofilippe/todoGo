@@ -8,10 +8,10 @@ import (
 // Application represents the application
 type Application struct {
 	Logger      *logger.Logger
-	UserService *user.UserService
+	UserService *user.Service
 }
 
-func NewApplication(userService *user.UserService, logger *logger.Logger) *Application {
+func NewApplication(userService *user.Service, logger *logger.Logger) *Application {
 	return &Application{
 		UserService: userService,
 	}
