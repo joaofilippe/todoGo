@@ -1,11 +1,11 @@
 module github.com/joaofilippe/todoGo
 
-go 1.21.5
+go 1.21.6
 
 require (
+	github.com/go-chi/chi v1.5.5
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.5.0
-	github.com/gorilla/mux v1.8.1
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
