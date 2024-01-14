@@ -16,6 +16,7 @@ import (
 	"github.com/joaofilippe/todoGo/application/services/user"
 	common "github.com/joaofilippe/todoGo/common/enum"
 	"github.com/joaofilippe/todoGo/common/logger"
+	migration "github.com/joaofilippe/todoGo/migration/user"
 )
 
 func main() {
@@ -29,6 +30,11 @@ func main() {
 
 	masterConnectionDB := getDbConnection("master", logger)
 	slaveConnectionDB := getDbConnection("slave", logger)
+
+	if err := migration.CreateUsersTable(masterConnectionDB); err != nil {
+		logger.Logger.Error(err.Error())
+	}
+	
 
 	userUtils := &user.UserUtils{}
 	userService := user.NewUserService(masterConnectionDB, slaveConnectionDB, userUtils, logger)
@@ -71,7 +77,7 @@ func getDbConnection(c string, log *logger.Logger) *postgres.Connection {
 	}
 
 	conn := postgres.NewConnection(configDB)
-	defer conn.Connection.Close()
+
 
 	if err := conn.Connection.Ping(); err != nil {
 		log.Fatalf(fmt.Errorf("can't connect to %s database", c))

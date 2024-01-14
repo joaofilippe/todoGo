@@ -1,15 +1,9 @@
-package query
+package migration
+
+import "github.com/joaofilippe/todoGo/adapters/database/postgres"
+
 
 const (
-	// SelectUserQuery is the query to select a user by id
-	SelectUserQuery = "SELECT * FROM users WHERE id = $1"
-
-	// SelectAllUsersQuery is the query to select all users
-	SelectAllUsersQuery = "SELECT * FROM users"
-
-	// InsertUserQuery is the query to insert a user
-	InsertUserQuery = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id"
-
 	// CreateUserTableQuery is the query to create the user table
 	CreateUserTableQuery = `
 			CREATE TABLE IF NOT EXISTS public.user
@@ -33,3 +27,9 @@ const (
 	// DropUserTableQuery is the query to drop the user table
 	DropUserTableQuery = "DROP TABLE IF EXISTS user"
 )
+
+// CreateUsersTable creates the users table
+func CreateUsersTable(conn *postgres.Connection) error {
+	_, err := conn.Connection.Exec(CreateUserTableQuery)
+	return err
+}

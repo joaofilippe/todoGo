@@ -19,16 +19,17 @@ func NewUserRepository(writer *postgres.Connection, reader *postgres.Connection)
 	}
 }
 
-// CreateUserTable creates the user table
-func (r *Repository) CreateUserTable() error {
-	return r.Database.CreateUserTable()
+// GetUserByUsername returns a user by username
+func (r *Repository) GetUserByUsername(username string) (*userModels.User, error) {
+	return nil, nil
 }
 
-// GetUserByUsername returns a user by username
-func (r *Repository) GetUserByUsername(username string) (*userModels.User, error)
-
 // GetUserByEmail returns a user by email
-func (r *Repository) GetUserByEmail(email string) (*userModels.User, error)
+func (r *Repository) GetUserByEmail(email string) (*userModels.User, error){
+	return nil, nil
+}
 
 // CreateUser creates a new user
-func (r *Repository) CreateUser(user *userModels.User) (int, error)
+func (r *Repository) CreateUser(user *userModels.User) (int, error){
+	return 0, nil
+}
