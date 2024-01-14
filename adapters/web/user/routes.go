@@ -16,17 +16,10 @@ type Web struct {
 	WebServer   *webserver.Server
 }
 
-type UserRequest struct {
-
-}
-
-func (u *UserRequest) Bind(r *http.Request) error {
-	return nil
-}
 
 // Create creates a new user
 func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
-	n := new(UserRequest)
+	n := new(NewUserRequest)
 	if err := render.Bind(r, n); err != nil {
 		render.Render(w, r, webserver.ErrBadRequest)
 		return
@@ -34,5 +27,15 @@ func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
 
 	newUser := new(models.NewUser)
 
-	u.Application.UserService.CreateUser(newUser)
+	id, err := u.Application.UserService.CreateUser(newUser)
+	if err != nil {
+		render.Render(w, r, ErrCannotCreateUser)
+		return
+	}
+
+
+	response := UserCreated
+	response.Data = id
+	response.Message = "User created successfully."
+	render.Render(w, r, UserCreated)
 }
