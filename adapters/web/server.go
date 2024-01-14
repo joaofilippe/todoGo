@@ -3,6 +3,7 @@ package webserver
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi"
 	"github.com/joaofilippe/todoGo/application"
@@ -18,8 +19,6 @@ type Server struct {
 func NewServer(application *application.Application) *Server {
 	r := chi.NewRouter()
 
-	fmt.Print("Creating new server instance...")
-
 	r.HandleFunc("/", homeHandler)
 
 	r.Route("/v1", func(r chi.Router) {
@@ -28,11 +27,23 @@ func NewServer(application *application.Application) *Server {
 	})
 
 	r.HandleFunc("/todos", todosHandler)
-	
+
 	return &Server{
 		Application: application,
 		Router:      r,
 	}
+}
+
+// Run starts the server
+func (s *Server) Run() error {
+	var port string
+	if port = os.Getenv("PORT"); port == "" {
+		port = "8080"
+	}
+
+	fmt.Println("Server running on port :"+ port)
+
+	return http.ListenAndServe(":"+port, s.Router)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -48,5 +59,14 @@ func todosV1Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func todosHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "todos")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusBadRequest)
+
+	ok := `
+		<h1>Ok</h1>
+		<p>It's working!</p>
+	`
+
+	
+	w.Write([]byte(ok))
 }

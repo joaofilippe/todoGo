@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -41,13 +40,7 @@ func main() {
 	application := application.NewApplication(userService, logger)
 
 	server := webserver.NewServer(application)
-
-	var PORT string
-	if PORT = os.Getenv("PORT"); PORT == "" {
-		PORT = "8080"
-	}
-
-	if err := http.ListenAndServe(":"+PORT, server.Router); err != nil {
+	if err := server.Run(); err != nil {
 		logger.Logger.Error(err.Error())
 	}
 
