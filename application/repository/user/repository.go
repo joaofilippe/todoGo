@@ -7,16 +7,21 @@ import (
 
 // Repository represents the user repository
 type Repository struct {
-	Master *postgres.Connection
-	Slave  *postgres.Connection
+	Database *postgres.Database
 }
 
 // NewUserRepository creates a new user repository
 func NewUserRepository(writer *postgres.Connection, reader *postgres.Connection) *Repository {
+	database := postgres.NewDatabase(writer, reader)
+
 	return &Repository{
-		Master: writer,
-		Slave:  reader,
+		Database: database,
 	}
+}
+
+// CreateUserTable creates the user table
+func (r *Repository) CreateUserTable() error {
+	return r.Database.CreateUserTable()
 }
 
 // GetUserByUsername returns a user by username
