@@ -8,17 +8,16 @@ import (
 
 var (
 	// ErrCannotCreateUser is the default cannot create user error
-	ErrCannotCreateUser = &webserver.ErrResponse{HTTPStatusCode: 400, StatusText: "Cannot create user."}
+	ErrCannotCreateUser = &webserver.ErrResponse{Status: http.StatusInternalServerError, ErrorMessage: "Cannot create user."}
 
 	// ErrUserNotFound is the default user not found error
-	ErrUserNotFound = &webserver.ErrResponse{HTTPStatusCode: 404, StatusText: "User not found."}
+	ErrUserNotFound = &webserver.Response{Status: http.StatusNoContent, Message: "User not found."}
 )
 
 var (
 	// UserCreated is the default user created response
 	UserCreated = &webserver.Response{
-		HTTPStatusCode: http.StatusCreated,
-		StatusText:     "201 ",
+		Status: http.StatusCreated,
 		Message: "User created successfully.",
 	}
 )

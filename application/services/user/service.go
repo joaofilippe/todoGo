@@ -36,14 +36,14 @@ func NewUserService(
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
-func (s *Service) CreateUser(newUser *userModels.NewUser) (int, error) {
+func (s *Service) CreateUser(newUser *userModels.NewUser) (uuid.UUID, error) {
 	userDB, err := s.UserRepository.GetUserByEmail(newUser.Email)
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
 	if userDB.ID != uuid.Nil {
-		return 0, errors.New(consts.ErrUserAlreadyExists)
+		return uuid.UUID{}, errors.New(consts.ErrUserAlreadyExists)
 	}
 
 	userID := uuid.New()

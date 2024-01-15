@@ -1,9 +1,12 @@
 package user
 
-import userModels "github.com/joaofilippe/todoGo/application/models/user"
+import (
+	"github.com/google/uuid"
+	userModels "github.com/joaofilippe/todoGo/application/models/user"
+)
 
 type IUserService interface {
-	Create(user *userModels.NewUser) (int, error)
+	Create(user *userModels.NewUser) (uuid.UUID, error)
 	Login(user *userModels.Login) (string, error)
 }
 

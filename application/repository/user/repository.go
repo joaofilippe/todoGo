@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/google/uuid"
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	userModels "github.com/joaofilippe/todoGo/application/models/user"
 )
@@ -30,6 +31,6 @@ func (r *Repository) GetUserByEmail(email string) (*userModels.User, error){
 }
 
 // CreateUser creates a new user
-func (r *Repository) CreateUser(user *userModels.User) (int, error){
-	return 0, nil
+func (r *Repository) CreateUser(user *userModels.User) (uuid.UUID, error){
+	return uuid.UUID{}, nil
 }

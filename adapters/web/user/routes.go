@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/render"
+	"github.com/google/uuid"
 
 	webserver "github.com/joaofilippe/todoGo/adapters/web"
 	"github.com/joaofilippe/todoGo/application"
@@ -15,7 +16,6 @@ type Web struct {
 	Application *application.Application
 	WebServer   *webserver.Server
 }
-
 
 // Create creates a new user
 func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
@@ -33,9 +33,14 @@ func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if id.
 
 	response := UserCreated
-	response.Data = id
-	response.Message = "User created successfully."
-	render.Render(w, r, UserCreated)
+	response.Data = struct {
+		UserID uuid.UUID `json:"user_id"`
+	}{
+		UserID: id,
+	}
+
+	render.Render(w, r, response)
 }

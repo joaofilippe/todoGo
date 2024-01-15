@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/google/uuid"
 	userModels "github.com/joaofilippe/todoGo/application/models/user"
 )
 
@@ -12,7 +13,7 @@ type IRepository interface {
 
 // RepositoryWriter represents the user repository writer
 type IRepositoryWriter interface {
-	CreateUser(user *userModels.User) (int, error)
+	CreateUser(user *userModels.User) (uuid.UUID, error)
 }
 
 // RepositoryReader represents the user repository reader
