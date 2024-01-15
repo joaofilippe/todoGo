@@ -1,9 +1,7 @@
-package helpers_test
+package structs
 
 import (
 	"testing"
-
-	"github.com/joaofilippe/todoGo/common/helpers"
 )
 
 func Test_CheckEmptyFields(t *testing.T) {
@@ -87,7 +85,7 @@ func Test_CheckEmptyFields(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		res, err := helpers.CheckEmptyFields(tt.data)
+		res, err := CheckEmptyFields(tt.data)
 		if err != nil && !tt.hasErr {
 			t.Error(err)
 		}

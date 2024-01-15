@@ -6,6 +6,7 @@ import (
 	"github.com/go-chi/render"
 	"github.com/google/uuid"
 
+	uuid_helper "github.com/joaofilippe/todoGo/common/helpers/uuid"
 	webserver "github.com/joaofilippe/todoGo/adapters/web"
 	"github.com/joaofilippe/todoGo/application"
 	models "github.com/joaofilippe/todoGo/application/models/user"
@@ -33,7 +34,10 @@ func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if id.
+	if uuid_helper.IsEmpty(id) {
+		render.Render(w, r, ErrCannotCreateUser)
+		return
+	}
 
 	response := UserCreated
 	response.Data = struct {
