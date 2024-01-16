@@ -1,4 +1,4 @@
-package user
+package users
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	consts "github.com/joaofilippe/todoGo/application/consts"
-	userModels "github.com/joaofilippe/todoGo/application/models/user"
+	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 	userRepo "github.com/joaofilippe/todoGo/application/repository/user"
 	"github.com/joaofilippe/todoGo/common/logger"
 )
@@ -36,7 +36,7 @@ func NewUserService(
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
-func (s *Service) CreateUser(newUser *userModels.NewUser) (uuid.UUID, error) {
+func (s *Service) CreateUser(newUser *usersModels.NewUser) (uuid.UUID, error) {
 	userDB, err := s.UserRepository.GetUserByEmail(newUser.Email)
 	if err != nil {
 		return uuid.UUID{}, err
@@ -48,7 +48,7 @@ func (s *Service) CreateUser(newUser *userModels.NewUser) (uuid.UUID, error) {
 
 	userID := uuid.New()
 
-	user := &userModels.User{
+	user := &usersModels.User{
 		ID:        userID,
 		FirstName: newUser.FirstName,
 		LastName:  newUser.LastName,
@@ -63,7 +63,7 @@ func (s *Service) CreateUser(newUser *userModels.NewUser) (uuid.UUID, error) {
 }
 
 // Login is a usecase to login a user and returns a token
-func (s *Service) Login(login userModels.Login) (string, error) {
+func (s *Service) Login(login usersModels.Login) (string, error) {
 	if err := s.Utils.validateLogin(&login); err != nil {
 		return "", err
 	}

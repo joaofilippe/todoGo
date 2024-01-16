@@ -1,5 +1,4 @@
-package user
-
+package users
 import "net/http"
 
 // NewUserRequest represents the new user request

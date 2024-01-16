@@ -1,9 +1,13 @@
 package user
 
 import (
+	"errors"
+	"strings"
+	"net/mail"
+
 	"github.com/google/uuid"
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
-	userModels "github.com/joaofilippe/todoGo/application/models/user"
+	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 )
 
 // Repository represents the user repository
@@ -21,16 +25,22 @@ func NewUserRepository(writer *postgres.Connection, reader *postgres.Connection)
 }
 
 // GetUserByUsername returns a user by username
-func (r *Repository) GetUserByUsername(username string) (*userModels.User, error) {
-	return nil, nil
+func (r *Repository) GetUserByUsername(username string) (*usersModels.User, error) {
+	return &usersModels.User{}, nil
 }
 
 // GetUserByEmail returns a user by email
-func (r *Repository) GetUserByEmail(email string) (*userModels.User, error){
-	return nil, nil
+func (r *Repository) GetUserByEmail(email string) (*usersModels.User, error){
+	e, err := mail.ParseAddress(email)
+	if err != nil {
+		return nil, err
+	}
+
+
+	return &usersModels.User{}, nil
 }
 
 // CreateUser creates a new user
-func (r *Repository) CreateUser(user *userModels.User) (uuid.UUID, error){
+func (r *Repository) CreateUser(user *usersModels.User) (uuid.UUID, error){
 	return uuid.UUID{}, nil
 }

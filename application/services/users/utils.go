@@ -1,4 +1,4 @@
-package user
+package users
 
 import (
 	"errors"
@@ -7,17 +7,17 @@ import (
 	jwt "github.com/golang-jwt/jwt"
 
 	consts "github.com/joaofilippe/todoGo/application/consts"
-	userModels "github.com/joaofilippe/todoGo/application/models/user"
+	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 )
 
 type UserUtils struct{}
 
-func (u *UserUtils) validateNewUser(user *userModels.NewUser) error {
+func (u *UserUtils) validateNewUser(user *usersModels.NewUser) error {
 
 	return nil
 }
 
-func (u *UserUtils) validateLogin(user *userModels.Login) error {
+func (u *UserUtils) validateLogin(user *usersModels.Login) error {
 	if user.Email == "" && user.Username == "" {
 		return errors.New(consts.ErrInvalidLogin)
 	}
@@ -25,7 +25,7 @@ func (u *UserUtils) validateLogin(user *userModels.Login) error {
 	return nil
 }
 
-func (s *UserUtils) generateToken(user *userModels.User) (string, error) {
+func (s *UserUtils) generateToken(user *usersModels.User) (string, error) {
 	secretString := os.Getenv("SECRET_KEY")
 	if secretString == "" {
 		return "", errors.New(consts.ErrSecretKey)

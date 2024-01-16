@@ -12,7 +12,7 @@ import (
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	"github.com/joaofilippe/todoGo/adapters/web"
 	"github.com/joaofilippe/todoGo/application"
-	"github.com/joaofilippe/todoGo/application/services/user"
+	"github.com/joaofilippe/todoGo/application/services/users"
 	common "github.com/joaofilippe/todoGo/common/enum"
 	"github.com/joaofilippe/todoGo/common/logger"
 	migration "github.com/joaofilippe/todoGo/migration/user"
@@ -35,12 +35,11 @@ func main() {
 	}
 	
 
-	userUtils := &user.UserUtils{}
-	userService := user.NewUserService(masterConnectionDB, slaveConnectionDB, userUtils, logger)
+	userUtils := &users.UserUtils{}
+	userService := users.NewUserService(masterConnectionDB, slaveConnectionDB, userUtils, logger)
 	application := application.NewApplication(userService, logger)
 
-	server := webserver.NewServer(application)
-	if err := server.Run(); err != nil {
+	if err := webserver.NewServer(application).Run(); err != nil {
 		logger.Logger.Error(err.Error())
 	}
 

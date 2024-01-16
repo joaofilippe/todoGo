@@ -6,12 +6,14 @@ import (
 	"os"
 
 	"github.com/go-chi/chi"
+	"github.com/joaofilippe/todoGo/adapters/web/users"
 	"github.com/joaofilippe/todoGo/application"
 )
 
 // Server represents the web server
 type Server struct {
 	Application *application.Application
+	User        *users.Web
 	Router      *chi.Mux
 }
 
@@ -19,19 +21,14 @@ type Server struct {
 func NewServer(application *application.Application) *Server {
 	r := chi.NewRouter()
 
-	r.HandleFunc("/", homeHandler)
-
-	r.Route("/v1", func(r chi.Router) {
-		r.Get("/", apiV1Handler)
-		r.Get("/todos", todosV1Handler)
-	})
-
-	r.HandleFunc("/todos", todosHandler)
-
-	return &Server{
+	server := &Server{
 		Application: application,
 		Router:      r,
 	}
+
+	server.buildAPIV1Routes()
+
+	return server
 }
 
 // Run starts the server
@@ -41,32 +38,25 @@ func (s *Server) Run() error {
 		port = "8080"
 	}
 
-	fmt.Println("Server running on port :"+ port)
+	fmt.Println("Server running on port :" + port)
 
 	return http.ListenAndServe(":"+port, s.Router)
 }
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "it's alive!")
+func (s *Server) buildAPIV1Routes() {
+	apiV1 := s.Router.Route("/v1", func(r chi.Router) {})
+
+	s.newUserWeb(s.Application, apiV1)
+
+	s.User.BuildRoutes(s.Router)
 }
 
-func apiV1Handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "api v1")
-}
+func (s *Server) newUserWeb(application *application.Application, router chi.Router) {
+	userWeb := &users.Web{
+		Application: application,
+	}
 
-func todosV1Handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "todos v1")
-}
+	userWeb.BuildRoutes(router)
 
-func todosHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.WriteHeader(http.StatusBadRequest)
-
-	ok := `
-		<h1>Ok</h1>
-		<p>It's working!</p>
-	`
-
-	
-	w.Write([]byte(ok))
+	s.User = userWeb
 }

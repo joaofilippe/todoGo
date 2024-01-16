@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
-	userModels "github.com/joaofilippe/todoGo/application/models/user"
+	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 	userDB "github.com/joaofilippe/todoGo/adapters/database/postgres/models"
 )
 
@@ -25,8 +25,8 @@ type UserDTO struct {
 }
 
 // ToDomain converts the UserDTO to a User domain model
-func (u *UserDTO) ToDomain() userModels.User {
-	return userModels.User{
+func (u *UserDTO) ToDomain() usersModels.User {
+	return usersModels.User{
 		ID:        u.ID,
 		FirstName: u.FirstName,
 		LastName:  u.LastName,
@@ -42,7 +42,7 @@ func (u *UserDTO) ToDomain() userModels.User {
 }
 
 // FromDomain converts the User domain model to a UserDTO
-func (u *UserDTO) FromDomain(user userModels.User) {
+func (u *UserDTO) FromDomain(user usersModels.User) {
 	u.ID = user.ID
 	u.FirstName = user.FirstName
 	u.LastName = user.LastName

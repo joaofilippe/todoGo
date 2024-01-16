@@ -1,5 +1,4 @@
-package user
-
+package users
 import (
 	"net/http"
 
@@ -7,26 +6,28 @@ import (
 	"github.com/google/uuid"
 
 	uuid_helper "github.com/joaofilippe/todoGo/common/helpers/uuid"
-	webserver "github.com/joaofilippe/todoGo/adapters/web"
+	"github.com/joaofilippe/todoGo/adapters/web/common"
 	"github.com/joaofilippe/todoGo/application"
-	models "github.com/joaofilippe/todoGo/application/models/user"
 )
 
 // Web represents the user web adapter
 type Web struct {
 	Application *application.Application
-	WebServer   *webserver.Server
 }
 
 // Create creates a new user
 func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
 	n := new(NewUserRequest)
 	if err := render.Bind(r, n); err != nil {
-		render.Render(w, r, webserver.ErrBadRequest)
+		render.Render(w, r, common.ErrBadRequest)
 		return
 	}
 
-	newUser := new(models.NewUser)
+	dto := new(NewUserDTO)
+
+	dto.FromRequestToDTO(n)
+
+	newUser := dto.FromDTOToModel()
 
 	id, err := u.Application.UserService.CreateUser(newUser)
 	if err != nil {
