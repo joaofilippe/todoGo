@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	common "github.com/joaofilippe/todoGo/common/enum"
+	"github.com/joaofilippe/todoGo/pkg/enum"
 )
 
 type Todo struct {
@@ -14,5 +14,5 @@ type Todo struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	Deadline    time.Time
-	Status      common.Status
+	Status      enum.Status
 }

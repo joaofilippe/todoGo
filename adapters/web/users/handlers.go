@@ -5,7 +5,7 @@ import (
 	"github.com/go-chi/render"
 	"github.com/google/uuid"
 
-	uuid_helper "github.com/joaofilippe/todoGo/common/helpers/uuid"
+	uuid_helper "github.com/joaofilippe/todoGo/pkg/helpers/uuid"
 	"github.com/joaofilippe/todoGo/adapters/web/common"
 	"github.com/joaofilippe/todoGo/application"
 )

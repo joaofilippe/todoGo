@@ -1,4 +1,4 @@
-package common
+package enum
 
 const (
 	Open = iota
