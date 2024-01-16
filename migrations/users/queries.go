@@ -1,4 +1,4 @@
-package migration
+package migrations
 
 const (
 	// CreateUserTableQuery is the query to create the user table

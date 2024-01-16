@@ -13,9 +13,9 @@ import (
 	"github.com/joaofilippe/todoGo/adapters/web"
 	"github.com/joaofilippe/todoGo/application"
 	"github.com/joaofilippe/todoGo/application/services/users"
-	common "github.com/joaofilippe/todoGo/common/enum"
-	"github.com/joaofilippe/todoGo/common/logger"
-	migration "github.com/joaofilippe/todoGo/migration/user"
+	"github.com/joaofilippe/todoGo/pkg/enum"
+	"github.com/joaofilippe/todoGo/pkg/logger"
+	userMigratons "github.com/joaofilippe/todoGo/migrations/users"
 )
 
 func main() {
@@ -30,7 +30,7 @@ func main() {
 	masterConnectionDB := getDbConnection("master", logger)
 	slaveConnectionDB := getDbConnection("slave", logger)
 
-	if err := migration.CreateUsersTable(masterConnectionDB); err != nil {
+	if err := userMigratons.CreateUsersTable(masterConnectionDB); err != nil {
 		logger.Logger.Error(err.Error())
 	}
 	

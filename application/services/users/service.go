@@ -10,7 +10,7 @@ import (
 	consts "github.com/joaofilippe/todoGo/application/consts"
 	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 	userRepo "github.com/joaofilippe/todoGo/application/repository/user"
-	"github.com/joaofilippe/todoGo/common/logger"
+	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 
 // Service is a struct for the user service

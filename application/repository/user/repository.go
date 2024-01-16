@@ -1,8 +1,6 @@
 package user
 
 import (
-	"errors"
-	"strings"
 	"net/mail"
 
 	"github.com/google/uuid"
@@ -31,7 +29,7 @@ func (r *Repository) GetUserByUsername(username string) (*usersModels.User, erro
 
 // GetUserByEmail returns a user by email
 func (r *Repository) GetUserByEmail(email string) (*usersModels.User, error){
-	e, err := mail.ParseAddress(email)
+	_, err := mail.ParseAddress(email)
 	if err != nil {
 		return nil, err
 	}

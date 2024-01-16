@@ -1,4 +1,4 @@
-package migration
+package migrations
 
 import "github.com/joaofilippe/todoGo/adapters/database/postgres"
 
