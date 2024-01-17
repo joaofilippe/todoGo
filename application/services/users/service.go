@@ -1,7 +1,6 @@
 package users
 
 import (
-	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -36,19 +35,28 @@ func NewUserService(
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
-func (s *Service) CreateUser(newUser *usersModels.NewUser) (uuid.UUID, error) {
+func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
+	valid, err := newUser.Validate()
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	if !valid {
+		return uuid.UUID{}, consts.ErrInvalidNewUser
+	}
+
 	userDB, err := s.UserRepository.GetUserByEmail(newUser.Email)
 	if err != nil {
 		return uuid.UUID{}, err
 	}
 
 	if userDB.ID != uuid.Nil {
-		return uuid.UUID{}, errors.New(consts.ErrUserAlreadyExists)
+		return uuid.UUID{}, consts.ErrUserAlreadyExists
 	}
 
 	userID := uuid.New()
 
-	user := &usersModels.User{
+	user := usersModels.User{
 		ID:        userID,
 		FirstName: newUser.FirstName,
 		LastName:  newUser.LastName,
@@ -64,7 +72,7 @@ func (s *Service) CreateUser(newUser *usersModels.NewUser) (uuid.UUID, error) {
 
 // Login is a usecase to login a user and returns a token
 func (s *Service) Login(login usersModels.Login) (string, error) {
-	if err := s.Utils.validateLogin(&login); err != nil {
+	if err := s.Utils.validateLogin(login); err != nil {
 		return "", err
 	}
 
@@ -75,11 +83,11 @@ func (s *Service) Login(login usersModels.Login) (string, error) {
 		}
 
 		if user.ID == uuid.Nil {
-			return "", errors.New(consts.ErrUserDoesNotExist)
+			return "", consts.ErrUserDoesNotExist
 		}
 
 		if user.Password != login.Password {
-			return "", errors.New(consts.ErrInvalidPassword)
+			return "", consts.ErrInvalidPassword
 		}
 
 		return s.Utils.generateToken(user)
@@ -91,11 +99,11 @@ func (s *Service) Login(login usersModels.Login) (string, error) {
 	}
 
 	if user.ID == uuid.Nil {
-		return "", errors.New(consts.ErrUserDoesNotExist)
+		return "", consts.ErrUserDoesNotExist
 	}
 
 	if user.Password != login.Password {
-		return "", errors.New(consts.ErrInvalidPassword)
+		return "", consts.ErrInvalidPassword
 	}
 
 	return s.Utils.generateToken(user)

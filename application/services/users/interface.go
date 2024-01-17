@@ -6,12 +6,12 @@ import (
 )
 
 type IUserService interface {
-	Create(user *usersModels.NewUser) (uuid.UUID, error)
-	Login(user *usersModels.Login) (string, error)
+	Create(user usersModels.NewUser) (uuid.UUID, error)
+	Login(user usersModels.Login) (string, error)
 }
 
 type IUserUtils interface {
-	validateNewUser(user *usersModels.NewUser) error
-	validateLogin(user *usersModels.Login) error
-	generateToken(user *usersModels.User) (string, error)
+	validateNewUser(user usersModels.NewUser) error
+	validateLogin(user usersModels.Login) error
+	generateToken(user usersModels.User) (string, error)
 }

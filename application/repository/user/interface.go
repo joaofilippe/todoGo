@@ -7,17 +7,17 @@ import (
 
 // Repository represents the user repository
 type IRepository interface {
-	IRepositoryReader
-	IRepositoryWriter
+	IReader
+	IWriter
 }
 
-// RepositoryWriter represents the user repository writer
-type IRepositoryWriter interface {
-	CreateUser(user *usersModels.User) (uuid.UUID, error)
+// IWriter represents the user repository writer
+type IWriter interface {
+	CreateUser(user usersModels.User) (uuid.UUID, error)
 }
 
-// RepositoryReader represents the user repository reader
-type IRepositoryReader interface {
-	GetUserByUsername(username string) (*usersModels.User, error)
-	GetUserByEmail(email string) (*usersModels.User, error)
+// IReader represents the user repository reader
+type IReader interface {
+	GetUserByUsername(username string) (usersModels.User, error)
+	GetUserByEmail(email string) (usersModels.User, error)
 }

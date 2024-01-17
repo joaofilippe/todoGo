@@ -18,7 +18,7 @@ func Test_GenerateToken(t *testing.T) {
 
 	uuid := uuid.New()
 
-	user := &models.User{
+	user := models.User{
 		ID:        uuid,
 		FirstName: "João",
 		LastName:  "Rodrigues",

@@ -5,7 +5,7 @@ import (
 	"github.com/go-chi/render"
 	"github.com/google/uuid"
 
-	uuid_helper "github.com/joaofilippe/todoGo/pkg/helpers/uuid"
+	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 	"github.com/joaofilippe/todoGo/adapters/web/common"
 	"github.com/joaofilippe/todoGo/application"
 )
@@ -25,12 +25,18 @@ func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
 
 	dto := new(NewUserDTO)
 
-	dto.FromRequestToDTO(n)
+	dto.FromRequestToDTO(*n)
 
-	newUser := dto.FromDTOToModel()
+	newUser , err := dto.FromDTOToModel()
+	if err != nil {
+		render.Render(w, r, ErrCannotCreateUser)
+		return
+	}
 
 	id, err := u.Application.UserService.CreateUser(newUser)
 	if err != nil {
+		e := ErrCannotCreateUser
+		e.Data = err.Error()
 		render.Render(w, r, ErrCannotCreateUser)
 		return
 	}

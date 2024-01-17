@@ -46,13 +46,13 @@ func main() {
 	fmt.Println(masterConnectionDB, slaveConnectionDB)
 }
 
-func loadEnv() common.Environment {
+func loadEnv() enum.Environment {
 	err := godotenv.Load("./config/.env")
 	if err != nil {
 		log.Fatal("can't load .env file")
 	}
 
-	return common.ParseToEnviroment(os.Getenv("ENV"))
+	return enum.ParseToEnviroment(os.Getenv("ENV"))
 }
 
 func getDbConnection(c string, log *logger.Logger) *postgres.Connection {

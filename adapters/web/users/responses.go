@@ -11,6 +11,9 @@ var (
 
 	// ErrUserNotFound is the default user not found error
 	ErrUserNotFound = &common.Response{Status: http.StatusNoContent, Message: "User not found."}
+
+	// ErrCannotConvertUser is the default cannot convert user error
+	ErrCannotConvertUser = &common.Response{Status: http.StatusInternalServerError, Message: "Cannot convert user dto."}
 )
 
 var (

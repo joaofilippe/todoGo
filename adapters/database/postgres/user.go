@@ -16,5 +16,7 @@ func NewDatabase(master, slave *Connection) *Database {
 
 // CreateUser is a function that creates a user 
 func (d *Database) CreateUser()(int64, error){
+	
+
 	return 0, nil
 }

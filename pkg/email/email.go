@@ -5,7 +5,8 @@ import (
 	"net/mail"
 )
 
-func ValidateEmail(email string) bool {
+// ValidateEmail validates an email
+func Validate(email string) bool {
 	e, err := mail.ParseAddress(email)
 	if err != nil {
 		return false
