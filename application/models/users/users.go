@@ -26,6 +26,7 @@ type User struct {
 }
 
 type NewUser struct {
+	ID 	  uuid.UUID
 	FirstName string
 	LastName  string
 	Username  string

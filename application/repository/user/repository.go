@@ -3,7 +3,6 @@ package user
 import (
 	"net/mail"
 
-	"github.com/google/uuid"
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 )
@@ -39,7 +38,6 @@ func (r *Repository) GetUserByEmail(email string) (usersModels.User, error){
 }
 
 // CreateUser creates a new user
-func (r *Repository) CreateUser(user usersModels.User) (uuid.UUID, error){
-	r.Database.CreateUser()
-	return uuid.UUID{}, nil
+func (r *Repository) CreateUser(newUser usersModels.NewUser) error{
+	return r.Database.CreateUser(newUser)
 }

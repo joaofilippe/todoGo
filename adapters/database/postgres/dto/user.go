@@ -24,6 +24,40 @@ type UserDTO struct {
 	Active    bool
 }
 
+// UserFromDomain is a function that creates a new UserDTO
+func UserFromDomain(u usersModels.User) *UserDTO {
+	return &UserDTO{
+		ID:        u.ID,
+		FirstName: u.FirstName,
+		LastName:  u.LastName,
+		Username:  u.Username,
+		Email:     u.Email,
+		Password:  u.Password,
+		TodoIDs:   u.TodoIDs,
+		BirthDate: u.BirthDate,
+		CreatedAt: u.CreatedAt,
+		UpdatedAt: u.UpdatedAt,
+		Active:    u.Active,
+	}
+}
+
+// UserFromDB converts the UserDB to a UserDTO
+func UserFromDB(user userDB.UserDB) *UserDTO{
+	return &UserDTO{
+		ID:        user.ID,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Username:  user.Username,
+		Email:     user.Email,
+		Password:  user.Password,
+		TodoIDs:   user.TodoIDs,
+		BirthDate: user.BirthDate,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+		Active:    user.Active,
+	}
+}
+
 // ToDomain converts the UserDTO to a User domain model
 func (u *UserDTO) ToDomain() usersModels.User {
 	return usersModels.User{
@@ -41,21 +75,6 @@ func (u *UserDTO) ToDomain() usersModels.User {
 	}
 }
 
-// FromDomain converts the User domain model to a UserDTO
-func (u *UserDTO) FromDomain(user usersModels.User) {
-	u.ID = user.ID
-	u.FirstName = user.FirstName
-	u.LastName = user.LastName
-	u.Username = user.Username
-	u.Email = user.Email
-	u.Password = user.Password
-	u.TodoIDs = user.TodoIDs
-	u.BirthDate = user.BirthDate
-	u.CreatedAt = user.CreatedAt
-	u.UpdatedAt = user.UpdatedAt
-	u.Active = user.Active
-}
-
 // ToDB converts the UserDTO to a UserDB
 func (u *UserDTO) ToDB() userDB.UserDB {
 	return userDB.UserDB{
@@ -71,19 +90,4 @@ func (u *UserDTO) ToDB() userDB.UserDB {
 		UpdatedAt: u.UpdatedAt,
 		Active:    u.Active,
 	}
-}
-
-// FromDB converts the UserDB to a UserDTO
-func (u *UserDTO) FromDB(user userDB.UserDB) {
-	u.ID = user.ID
-	u.FirstName = user.FirstName
-	u.LastName = user.LastName
-	u.Username = user.Username
-	u.Email = user.Email
-	u.Password = user.Password
-	u.TodoIDs = user.TodoIDs
-	u.BirthDate = user.BirthDate
-	u.CreatedAt = user.CreatedAt
-	u.UpdatedAt = user.UpdatedAt
-	u.Active = user.Active
 }

@@ -1,5 +1,11 @@
 package postgres
 
+import (
+	dto "github.com/joaofilippe/todoGo/adapters/database/postgres/dto"
+	"github.com/joaofilippe/todoGo/adapters/database/postgres/queries"
+	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+)
+
 // Database is a struct that defines the user database
 type Database struct {
 	MasterConnection *Connection
@@ -14,9 +20,23 @@ func NewDatabase(master, slave *Connection) *Database {
 	}
 }
 
-// CreateUser is a function that creates a user 
-func (d *Database) CreateUser()(int64, error){
-	
+// CreateUser is a function that creates a user
+func (d *Database) CreateUser(n usersModels.NewUser) (error) {
+	newUser := dto.NewUserFromDomain(n)
 
-	return 0, nil
+	_, err := d.MasterConnection.Connection.Exec(queries.InsertNewUserQuery,
+		newUser.ID,
+		newUser.FirstName,
+		newUser.LastName,
+		newUser.Username,
+		newUser.Email,
+		newUser.Password,
+		newUser.BirthDate,
+		true,
+	)
+	if err != nil {
+		return err
+	}
+
+	return err
 }

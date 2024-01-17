@@ -1,8 +1,6 @@
 package users
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
@@ -36,6 +34,7 @@ func NewUserService(
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
 func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
+	newUser.ID = uuid.New()
 	valid, err := newUser.Validate()
 	if err != nil {
 		return uuid.UUID{}, err
@@ -53,21 +52,13 @@ func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
 	if userDB.ID != uuid.Nil {
 		return uuid.UUID{}, consts.ErrUserAlreadyExists
 	}
-
-	userID := uuid.New()
-
-	user := usersModels.User{
-		ID:        userID,
-		FirstName: newUser.FirstName,
-		LastName:  newUser.LastName,
-		Email:     newUser.Email,
-		Password:  newUser.Password,
-		Username:  newUser.Username,
-		CreatedAt: time.Now(),
-		Active:    true,
+	
+	err = s.UserRepository.CreateUser(newUser)
+	if err != nil {
+		return uuid.UUID{}, err
 	}
 
-	return s.UserRepository.CreateUser(user)
+	return newUser.ID, nil
 }
 
 // Login is a usecase to login a user and returns a token
