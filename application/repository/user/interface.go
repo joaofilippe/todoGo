@@ -21,4 +21,5 @@ type IReader interface {
 	GetUserByID(id uuid.UUID) (usersModels.User, error)
 	GetUserByUsername(username string) (usersModels.User, error)
 	GetUserByEmail(email string) (usersModels.User, error)
+	CheckUserExists(username, email string) (bool, error) 
 }

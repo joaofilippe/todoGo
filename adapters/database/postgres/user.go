@@ -86,3 +86,15 @@ func (d *Database) GetUserByUsername(username string) (usersModels.User, error) 
 
 	return dto.UserFromDB(userDB).ToDomain(), nil
 }
+
+// CheckUserExists is a function that checks if a user exists
+func (d *Database) CheckUserExists(username, email string) (bool, error) {
+	var exists bool
+
+	err := d.SlaveConnection.Connection.Get(&exists, queries.CheckUserExists, username, email)
+	if err != nil {
+		return false, err
+	}
+
+	return exists, nil
+}

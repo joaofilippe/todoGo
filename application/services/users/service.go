@@ -44,12 +44,12 @@ func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
 		return uuid.UUID{}, consts.ErrInvalidNewUser
 	}
 
-	userDB, err := s.UserRepository.GetUserByEmail(newUser.Email)
+	exists, err := s.UserRepository.CheckUserExists(newUser.Username, newUser.Email)
 	if err != nil {
 		return uuid.UUID{}, err
 	}
 
-	if userDB.ID != uuid.Nil {
+	if exists {
 		return uuid.UUID{}, consts.ErrUserAlreadyExists
 	}
 	

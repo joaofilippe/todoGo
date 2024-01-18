@@ -54,3 +54,8 @@ func (r *Repository) GetUserByEmail(email string) (usersModels.User, error) {
 func (r *Repository) CreateNewUser(newUser usersModels.NewUser) error {
 	return r.Database.CreateNewUser(newUser)
 }
+
+// CheckUserExists checks if a user exists
+func (r *Repository) CheckUserExists(username, email string) (bool, error) {
+	return r.Database.CheckUserExists(username, email)
+}

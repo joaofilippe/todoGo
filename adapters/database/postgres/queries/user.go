@@ -13,6 +13,9 @@ const (
 	// SelectAllUsersQuery is the query to select all users
 	SelectAllUsersQuery = "SELECT * FROM user"
 
+	// CheckUserExists
+	CheckUserExists = "SELECT EXISTS(SELECT 1 FROM user WHERE username = $1 OR email = $2)"
+
 	// InsertNewUserQuery is the query to insert a user
 	InsertNewUserQuery = `
 		INSERT INTO public.user(
