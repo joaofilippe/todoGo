@@ -53,7 +53,7 @@ func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
 		return uuid.UUID{}, consts.ErrUserAlreadyExists
 	}
 	
-	err = s.UserRepository.CreateUser(newUser)
+	err = s.UserRepository.CreateNewUser(newUser)
 	if err != nil {
 		return uuid.UUID{}, err
 	}

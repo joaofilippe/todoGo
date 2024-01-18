@@ -3,6 +3,7 @@ package user
 import (
 	"net/mail"
 
+	"github.com/google/uuid"
 	"github.com/joaofilippe/todoGo/adapters/database/postgres"
 	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 )
@@ -21,23 +22,35 @@ func NewUserRepository(writer *postgres.Connection, reader *postgres.Connection)
 	}
 }
 
+// GetUserByID returns a user by id
+func (r *Repository) GetUserByID(id uuid.UUID) (usersModels.User, error) {
+	if id == uuid.Nil {
+		return usersModels.User{}, ErrNoID
+	}
+
+	return r.Database.GetUserByID(id)
+}
+
 // GetUserByUsername returns a user by username
 func (r *Repository) GetUserByUsername(username string) (usersModels.User, error) {
-	return usersModels.User{}, nil
+	if username == "" {
+		return usersModels.User{}, ErrNoUsername
+	}
+
+	return r.Database.GetUserByUsername(username)
 }
 
 // GetUserByEmail returns a user by email
-func (r *Repository) GetUserByEmail(email string) (usersModels.User, error){
+func (r *Repository) GetUserByEmail(email string) (usersModels.User, error) {
 	_, err := mail.ParseAddress(email)
 	if err != nil {
-		return usersModels.User{}, err
+		return usersModels.User{}, ErrNoEmail
 	}
 
-
-	return usersModels.User{}, nil
+	return r.Database.GetUserByEmail(email)
 }
 
-// CreateUser creates a new user
-func (r *Repository) CreateUser(newUser usersModels.NewUser) error{
-	return r.Database.CreateUser(newUser)
+// CreateNewUser creates a new user
+func (r *Repository) CreateNewUser(newUser usersModels.NewUser) error {
+	return r.Database.CreateNewUser(newUser)
 }

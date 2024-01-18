@@ -1,12 +1,15 @@
 package dto
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
+	// "github.com/lib/pq"
 
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
 	userDB "github.com/joaofilippe/todoGo/adapters/database/postgres/models"
+	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
 
 // UserDTO is the model for the user table
@@ -42,7 +45,16 @@ func UserFromDomain(u usersModels.User) *UserDTO {
 }
 
 // UserFromDB converts the UserDB to a UserDTO
-func UserFromDB(user userDB.UserDB) *UserDTO{
+func UserFromDB(user userDB.UserDB) *UserDTO {
+	var todoIDs []uuid.UUID
+	if user.TodoIDs.Valid {
+		todoIDs, _ = uuid_helper.ConvertStringToArray(user.TodoIDs.String[1 : len(user.TodoIDs.String)-1])
+	}
+	
+	birthDate, _ := time.Parse(time.RFC3339, user.BirthDate.String)
+	createdAt, _ := time.Parse(time.RFC3339, user.CreatedAt.String)
+	updatedAt, _ := time.Parse(time.RFC3339, user.UpdatedAt.String)
+
 	return &UserDTO{
 		ID:        user.ID,
 		FirstName: user.FirstName,
@@ -50,10 +62,10 @@ func UserFromDB(user userDB.UserDB) *UserDTO{
 		Username:  user.Username,
 		Email:     user.Email,
 		Password:  user.Password,
-		TodoIDs:   user.TodoIDs,
-		BirthDate: user.BirthDate,
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: user.UpdatedAt,
+		TodoIDs:   todoIDs,
+		BirthDate: birthDate,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
 		Active:    user.Active,
 	}
 }
@@ -84,10 +96,10 @@ func (u *UserDTO) ToDB() userDB.UserDB {
 		Username:  u.Username,
 		Email:     u.Email,
 		Password:  u.Password,
-		TodoIDs:   u.TodoIDs,
-		BirthDate: u.BirthDate,
-		CreatedAt: u.CreatedAt,
-		UpdatedAt: u.UpdatedAt,
+		TodoIDs:   sql.NullString{},
+		BirthDate: sql.NullString{},
+		CreatedAt: sql.NullString{},
+		UpdatedAt: sql.NullString{},
 		Active:    u.Active,
 	}
 }

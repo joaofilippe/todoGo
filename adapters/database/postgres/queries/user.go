@@ -1,11 +1,17 @@
 package queries
 
 const (
-	// SelectUserQuery is the query to select a user by id
-	SelectUserQuery = "SELECT * FROM users WHERE id = $1"
+	// SelectUserQueryByID is the query to select a user by id
+	SelectUserQueryByID = "SELECT * FROM user WHERE id = $1"
+
+	// SelectUserQueryByUsername is the query to select a user by username
+	SelectUserQueryByUsername = "SELECT * FROM user WHERE username = $1"
+
+	// SelectUserQueryByEmail is the query to select a user by email
+	SelectUserQueryByEmail = "SELECT * FROM public.user WHERE email = $1"
 
 	// SelectAllUsersQuery is the query to select all users
-	SelectAllUsersQuery = "SELECT * FROM users"
+	SelectAllUsersQuery = "SELECT * FROM user"
 
 	// InsertNewUserQuery is the query to insert a user
 	InsertNewUserQuery = `
