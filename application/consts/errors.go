@@ -3,7 +3,7 @@ package consts
 import "errors"
 
 var (
-	ErrUserAlreadyExists = errors.New("user already exists")
+	ErrUserAlreadyExists = errors.New("username or email already exists in database")
 	ErrInvalidLogin      = errors.New("invalid login")
 	ErrUserDoesNotExist  = errors.New("user does not exist")
 	ErrInvalidPassword   = errors.New("invalid password")

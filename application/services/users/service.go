@@ -13,8 +13,8 @@ import (
 // Service is a struct for the user service
 type Service struct {
 	UserRepository userRepo.IRepository
-	UserService    IUserService
-	Utils          IUserUtils
+	UserService    IService
+	Utils          IUtils
 	Logger         *logger.Logger
 }
 
@@ -22,7 +22,7 @@ type Service struct {
 func NewUserService(
 	writer *postgres.Connection,
 	reader *postgres.Connection,
-	utils IUserUtils,
+	utils IUtils,
 	logger *logger.Logger,
 ) *Service {
 	return &Service{
@@ -33,7 +33,7 @@ func NewUserService(
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
-func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
+func (s *Service) Create(newUser usersModels.NewUser) (uuid.UUID, error) {
 	newUser.ID = uuid.New()
 	valid, err := newUser.Validate()
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *Service) CreateUser(newUser usersModels.NewUser) (uuid.UUID, error) {
 	if exists {
 		return uuid.UUID{}, consts.ErrUserAlreadyExists
 	}
-	
+
 	err = s.UserRepository.CreateNewUser(newUser)
 	if err != nil {
 		return uuid.UUID{}, err
@@ -98,4 +98,19 @@ func (s *Service) Login(login usersModels.Login) (string, error) {
 	}
 
 	return s.Utils.generateToken(user)
+}
+
+// GetUserByID returns a user by id
+func (s *Service) GetUserByID(id uuid.UUID) (usersModels.User, error) {
+	return s.UserRepository.GetUserByID(id)
+}
+
+// GetUserByUsername returns a user by username
+func (s *Service) GetUserByUsername(username string) (usersModels.User, error) {
+	return s.UserRepository.GetUserByUsername(username)
+}
+
+// GetUserByEmail returns a user by email
+func (s *Service) GetUserByEmail(email string) (usersModels.User, error) {
+	return s.UserRepository.GetUserByEmail(email)
 }
