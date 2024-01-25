@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/go-chi/chi"
-	"github.com/joaofilippe/todoGo/adapters/web/users"
-	"github.com/joaofilippe/todoGo/application"
+	"github.com/joaofilippe/todoGo/internal/adapters/web/users"
+	"github.com/joaofilippe/todoGo/internal/application"
 )
 
 // Server represents the web server

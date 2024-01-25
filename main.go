@@ -9,13 +9,13 @@ import (
 	_ "github.com/lib/pq"
 	"gopkg.in/yaml.v3"
 
-	"github.com/joaofilippe/todoGo/adapters/database/postgres"
-	"github.com/joaofilippe/todoGo/adapters/web"
-	"github.com/joaofilippe/todoGo/application"
-	"github.com/joaofilippe/todoGo/application/services/users"
+	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
+	"github.com/joaofilippe/todoGo/internal/adapters/web"
+	"github.com/joaofilippe/todoGo/internal/application"
+	"github.com/joaofilippe/todoGo/internal/application/services/users"
+	userMigratons "github.com/joaofilippe/todoGo/internal/migrations/users"
 	"github.com/joaofilippe/todoGo/pkg/enum"
 	"github.com/joaofilippe/todoGo/pkg/logger"
-	userMigratons "github.com/joaofilippe/todoGo/migrations/users"
 )
 
 func main() {
