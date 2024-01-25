@@ -2,7 +2,7 @@ package users
 
 import (
 	"github.com/google/uuid"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 type IService interface {

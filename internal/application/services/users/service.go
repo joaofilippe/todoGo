@@ -3,10 +3,10 @@ package users
 import (
 	"github.com/google/uuid"
 
-	"github.com/joaofilippe/todoGo/adapters/database/postgres"
-	consts "github.com/joaofilippe/todoGo/application/consts"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
-	userRepo "github.com/joaofilippe/todoGo/application/repository/user"
+	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
+	consts "github.com/joaofilippe/todoGo/internal/application/consts"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
+	userRepo "github.com/joaofilippe/todoGo/internal/application/repository/user"
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 

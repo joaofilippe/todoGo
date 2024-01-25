@@ -3,7 +3,7 @@ package users
 import (
 	"net/http"
 
-	"github.com/joaofilippe/todoGo/adapters/web/common"
+	"github.com/joaofilippe/todoGo/internal/adapters/web/common"
 )
 
 var (

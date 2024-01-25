@@ -5,8 +5,8 @@ import (
 
 	jwt "github.com/golang-jwt/jwt"
 
-	consts "github.com/joaofilippe/todoGo/application/consts"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	consts "github.com/joaofilippe/todoGo/internal/application/consts"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 type UserUtils struct{}

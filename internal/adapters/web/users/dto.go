@@ -3,7 +3,7 @@ package users
 import (
 	"time"
 
-	usersModel "github.com/joaofilippe/todoGo/application/models/users"
+	usersModel "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 // NewUserDTO represents the new user DTO

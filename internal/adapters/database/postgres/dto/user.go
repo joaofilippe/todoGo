@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 	// "github.com/lib/pq"
 
-	userDB "github.com/joaofilippe/todoGo/adapters/database/postgres/models"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	userDB "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
 	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
 

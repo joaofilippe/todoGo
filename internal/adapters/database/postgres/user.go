@@ -4,10 +4,10 @@ import (
 	"database/sql"
 
 	"github.com/google/uuid"
-	dto "github.com/joaofilippe/todoGo/adapters/database/postgres/dto"
-	models "github.com/joaofilippe/todoGo/adapters/database/postgres/models"
-	"github.com/joaofilippe/todoGo/adapters/database/postgres/queries"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	dto "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/dto"
+	models "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
+	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres/queries"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 // Database is a struct that defines the user database

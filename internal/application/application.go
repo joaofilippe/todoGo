@@ -1,7 +1,7 @@
 package application
 
 import (
-	"github.com/joaofilippe/todoGo/application/services/users"
+	"github.com/joaofilippe/todoGo/internal/application/services/users"
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 

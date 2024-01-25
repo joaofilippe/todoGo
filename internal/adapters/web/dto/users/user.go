@@ -3,7 +3,7 @@ package dto
 import (
 	"encoding/json"
 
-	"github.com/joaofilippe/todoGo/application/models/users"
+	"github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 type User struct {

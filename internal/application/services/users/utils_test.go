@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	models "github.com/joaofilippe/todoGo/application/models/users"
+	models "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 func Test_GenerateToken(t *testing.T) {

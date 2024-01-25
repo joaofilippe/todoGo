@@ -4,8 +4,8 @@ import (
 	"net/mail"
 
 	"github.com/google/uuid"
-	"github.com/joaofilippe/todoGo/adapters/database/postgres"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 // Repository represents the user repository

@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/uuid"
 
-	userDB "github.com/joaofilippe/todoGo/adapters/database/postgres/models"
-	usersModels "github.com/joaofilippe/todoGo/application/models/users"
+	userDB "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
+	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
 )
 
 // UserDTO is the model for the user table

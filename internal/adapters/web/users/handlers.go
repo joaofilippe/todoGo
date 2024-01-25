@@ -6,9 +6,9 @@ import (
 	"github.com/go-chi/render"
 	"github.com/google/uuid"
 
-	"github.com/joaofilippe/todoGo/adapters/web/common"
-	dto "github.com/joaofilippe/todoGo/adapters/web/dto/users"
-	"github.com/joaofilippe/todoGo/application"
+	"github.com/joaofilippe/todoGo/internal/adapters/web/common"
+	dto "github.com/joaofilippe/todoGo/internal/adapters/web/dto/users"
+	"github.com/joaofilippe/todoGo/internal/application"
 	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
 
