@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"gopkg.in/yaml.v3"
@@ -19,8 +20,10 @@ import (
 )
 
 func main() {
-	env := loadEnv()
+	osPath, _ := os.Getwd()
+	fmt.Println(osPath)
 
+	env := loadEnv(osPath)
 	logger := logger.NewLogger(logger.LogOptions{
 		Environment: env.ToString(),
 	})
@@ -33,7 +36,6 @@ func main() {
 	if err := userMigratons.CreateUsersTable(masterConnectionDB); err != nil {
 		logger.Logger.Error(err.Error())
 	}
-	
 
 	userUtils := &users.UserUtils{}
 	userService := users.NewUserService(masterConnectionDB, slaveConnectionDB, userUtils, logger)
@@ -46,17 +48,22 @@ func main() {
 	fmt.Println(masterConnectionDB, slaveConnectionDB)
 }
 
-func loadEnv() enum.Environment {
-	err := godotenv.Load("./config/.env")
+func loadEnv(path string) enum.Environment {
+	env := enum.ParseToEnviroment(os.Getenv("ENV"))
+	
+	fmt.Println(env)
+	err := godotenv.Load(path + "/config/.env")
 	if err != nil {
-		log.Fatal("can't load .env file")
+		log.Fatal(err.Error())
+		log.Fatal("can't load .env file :( ")
 	}
 
-	return enum.ParseToEnviroment(os.Getenv("ENV"))
+	return env
 }
 
 func getDbConnection(c string, log *logger.Logger) *postgres.Connection {
-	yamlFile, err := os.ReadFile(fmt.Sprintf("./config/%s.yaml", c))
+	path, _ := os.Getwd()
+	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/config/%s.yaml", path, c))
 	if err != nil {
 		log.Fatalf(fmt.Errorf("can't load %s.yaml file", c))
 	}
@@ -69,7 +76,6 @@ func getDbConnection(c string, log *logger.Logger) *postgres.Connection {
 	}
 
 	conn := postgres.NewConnection(configDB)
-
 
 	if err := conn.Connection.Ping(); err != nil {
 		log.Fatalf(fmt.Errorf("can't connect to %s database", c))

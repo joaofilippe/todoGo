@@ -1,6 +1,6 @@
 package todo
 
-import todoModels "github.com/joaofilippe/todoGo/application/models/todo"
+import todoModels "github.com/joaofilippe/todoGo/internal/application/models/todo"
 
 type TodoService struct {
 	TodoService    ITodoService
