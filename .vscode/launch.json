@@ -11,7 +11,8 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/main.go",
             "env": {
-                "ENV": "dev"}
+                "ENV": "DEV"
+            }
         }
     ]
 }

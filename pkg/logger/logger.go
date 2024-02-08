@@ -8,20 +8,12 @@ import (
 
 type Logger struct {
 	Logger  *slog.Logger
-	Options LogOptions
 }
-
-type LogOptions struct {
-	Level       string
-	Environment string
-}
-
 // NewLogger returns a new logger
-func NewLogger(logOptions LogOptions) *Logger {
+func NewLogger() *Logger {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	return &Logger{
 		Logger:  logger,
-		Options: logOptions,
 	}
 }
 

@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -38,6 +39,7 @@ func NewConnection(config *Config) *Connection {
 
 	db, err := sqlx.Open("postgres", config.Dsn)
 	if err != nil {
+		log.Fatalf(err.Error())
 		return connection
 	}
 

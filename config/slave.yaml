@@ -1,4 +1,4 @@
-host: localhost
+host: host.docker.internal
 port: 5432
 user: joaof
 password: joaof123

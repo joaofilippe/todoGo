@@ -2,14 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
-	
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"gopkg.in/yaml.v3"
 
+	"github.com/joaofilippe/todoGo/config"
 	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
 	"github.com/joaofilippe/todoGo/internal/adapters/web"
 	"github.com/joaofilippe/todoGo/internal/application"
@@ -20,18 +18,11 @@ import (
 )
 
 func main() {
-	osPath, _ := os.Getwd()
-	fmt.Println(osPath)
+	logger := logger.NewLogger()
+	appConfig := config.NewApp(*logger)
 
-	env := loadEnv(osPath)
-	logger := logger.NewLogger(logger.LogOptions{
-		Environment: env.ToString(),
-	})
-
-	logger.Infof("logando")
-
-	masterConnectionDB := getDbConnection("master", logger)
-	slaveConnectionDB := getDbConnection("slave", logger)
+	masterConnectionDB := getDbConnection(logger, appConfig, "master")
+	slaveConnectionDB := getDbConnection(logger, appConfig, "slave")
 
 	if err := userMigratons.CreateUsersTable(masterConnectionDB); err != nil {
 		logger.Logger.Error(err.Error())
@@ -48,22 +39,8 @@ func main() {
 	fmt.Println(masterConnectionDB, slaveConnectionDB)
 }
 
-func loadEnv(path string) enum.Environment {
-	env := enum.ParseToEnviroment(os.Getenv("ENV"))
-	
-	fmt.Println(env)
-	err := godotenv.Load(path + "/config/.env")
-	if err != nil {
-		log.Fatal(err.Error())
-		log.Fatal("can't load .env file :( ")
-	}
-
-	return env
-}
-
-func getDbConnection(c string, log *logger.Logger) *postgres.Connection {
-	path, _ := os.Getwd()
-	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/config/%s.yaml", path, c))
+func getDbConnection(log *logger.Logger, appConfig *config.App, c string) *postgres.Connection {
+	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/%s.yaml", appConfig.ConfigPath, c))
 	if err != nil {
 		log.Fatalf(fmt.Errorf("can't load %s.yaml file", c))
 	}
@@ -75,9 +52,14 @@ func getDbConnection(c string, log *logger.Logger) *postgres.Connection {
 		log.Fatalf(fmt.Errorf("can't unmarshal %s.yaml file", c))
 	}
 
+	if appConfig.Env != enum.Environment(1) {
+		configDB.Host = "host.docker.internal"
+	}
+
 	conn := postgres.NewConnection(configDB)
 
 	if err := conn.Connection.Ping(); err != nil {
+		fmt.Println(err)
 		log.Fatalf(fmt.Errorf("can't connect to %s database", c))
 	} else {
 		log.Infof(fmt.Sprintf("connected to %s database", c))

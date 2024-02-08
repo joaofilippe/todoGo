@@ -9,6 +9,6 @@ import (
 func Test_NewLogger(t *testing.T){
 	assert := assert.New(t)
 
-	logger := NewLogger(LogOptions{})
+	logger := NewLogger()
 	assert.NotNil(logger, "logger coudn't be initialized")
 }
