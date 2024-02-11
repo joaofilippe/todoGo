@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	_ "github.com/lib/pq"
-	"gopkg.in/yaml.v3"
 
 	"github.com/joaofilippe/todoGo/config"
 	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
@@ -40,30 +38,9 @@ func main() {
 }
 
 func getDbConnection(log *logger.Logger, appConfig *config.App, c string) *postgres.Connection {
-	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/%s.yaml", appConfig.ConfigPath, c))
-	if err != nil {
-		log.Fatalf(fmt.Errorf("can't load %s.yaml file", c))
+	if appConfig.Env == enum.Development {
+		return postgres.GetConfigFromYaml(log, appConfig,c)
 	}
 
-	configDB := new(postgres.Config)
-
-	err = yaml.Unmarshal(yamlFile, configDB)
-	if err != nil {
-		log.Fatalf(fmt.Errorf("can't unmarshal %s.yaml file", c))
-	}
-
-	if appConfig.Env != enum.Environment(1) {
-		configDB.Host = "host.docker.internal"
-	}
-
-	conn := postgres.NewConnection(configDB)
-
-	if err := conn.Connection.Ping(); err != nil {
-		fmt.Println(err)
-		log.Fatalf(fmt.Errorf("can't connect to %s database", c))
-	} else {
-		log.Infof(fmt.Sprintf("connected to %s database", c))
-	}
-
-	return conn
+	return &postgres.Connection{}
 }
