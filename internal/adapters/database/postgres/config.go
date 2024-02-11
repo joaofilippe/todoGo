@@ -6,19 +6,20 @@ import (
 	"os"
 
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq" //necessary to config
+	"gopkg.in/yaml.v3"
+
 	"github.com/joaofilippe/todoGo/config"
 	"github.com/joaofilippe/todoGo/pkg/enum"
 	"github.com/joaofilippe/todoGo/pkg/logger"
-	_ "github.com/lib/pq"
-	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
-	Host     string `yaml:"host"`
-	Port     int    `yaml:"port"`
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	DBName   string `yaml:"dbname"`
+	Host     string `yaml:"host" env:"DB_HOST"`
+	Port     int    `yaml:"port" env:"DB_PORT"`
+	User     string `yaml:"user" env:"DB_USER"`
+	Password string `yaml:"password" env:"DB_PASSWORD"`
+	DBName   string `yaml:"dbname" env:"DB_NAME"`
 	Dsn      string
 }
 
@@ -85,6 +86,5 @@ func GetConfigFromYaml(log *logger.Logger, appConfig *config.App, c string) *Con
 }
 
 func GetConfigFromEnv(log *logger.Logger, appConfig *config.App, c string) *Connection {
-
 	return &Connection{}
 }
