@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq" //necessary to config
@@ -16,7 +17,7 @@ import (
 
 type Config struct {
 	Host     string `yaml:"host" env:"DB_HOST"`
-	Port     int    `yaml:"port" env:"DB_PORT"`
+	Port     string `yaml:"port" env:"DB_PORT"`
 	User     string `yaml:"user" env:"DB_USER"`
 	Password string `yaml:"password" env:"DB_PASSWORD"`
 	DBName   string `yaml:"dbname" env:"DB_NAME"`
@@ -29,7 +30,7 @@ type Connection struct {
 }
 
 func (c *Config) getDsn() string {
-	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		c.Host,
 		c.Port,
 		c.User,
@@ -85,6 +86,21 @@ func GetConfigFromYaml(log *logger.Logger, appConfig *config.App, c string) *Con
 	return conn
 }
 
-func GetConfigFromEnv(log *logger.Logger, appConfig *config.App, c string) *Connection {
+func GetConfigFromEnv() *Connection {
+	config := new(Config)
+
+	structE := reflect.ValueOf(config).Elem()
+	structT := reflect.TypeOf(*config)
+
+	for i := 0; i < structE.NumField(); i++ {
+		fieldT := structT.Field(i)
+		fieldName := fieldT.Name
+		tagValue := fieldT.Tag.Get("env")
+		field := structE.FieldByName(fieldName)
+
+		rs := reflect.ValueOf(os.Getenv(tagValue))
+		field.Set(rs)
+	}
+
 	return &Connection{}
 }
