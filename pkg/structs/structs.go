@@ -3,8 +3,10 @@ package structs
 import (
 	"errors"
 	"reflect"
+	"strings"
 )
 
+// GetTagsValues returns the values of the informed tag
 func GetTagsValues(s any, tag string)( []string, error) {
 	v := reflect.TypeOf(s)
 
@@ -17,7 +19,11 @@ func GetTagsValues(s any, tag string)( []string, error) {
 	for i := 0; i < v.NumField(); i++ {
 		f := v.Field(i)
 
-		tagsValues = append(tagsValues, f.Tag.Get(tag))
+		value := f.Tag.Get(tag)
+
+		if !strings.EqualFold(value, ""){
+			tagsValues = append(tagsValues, )
+		}
 	}
 
 	return tagsValues, nil
