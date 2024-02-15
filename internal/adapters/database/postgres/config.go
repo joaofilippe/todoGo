@@ -58,6 +58,14 @@ func NewConnection(config *Config) *Connection {
 	return connection
 }
 
+func GetConnection(log *logger.Logger, appConfig *config.App, c string) *Connection {
+	if appConfig.Env == enum.Development {
+		return GetConfigFromYaml(log, appConfig, c)
+	}
+
+	return GetConfigFromEnv()
+}
+
 func GetConfigFromYaml(log *logger.Logger, appConfig *config.App, c string) *Connection {
 	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/%s.yaml", appConfig.ConfigPath, c))
 	if err != nil {
