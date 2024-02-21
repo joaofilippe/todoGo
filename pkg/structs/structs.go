@@ -38,7 +38,7 @@ func SetStringFieldValueByName(s any, fieldName string, value string) error {
 	}
 
 	field := e.FieldByName(fieldName)
-	if field == (reflect.Value{}) {
+	if !field.IsValid() {
 		return errors.New("field doesn't exist")
 	}
 

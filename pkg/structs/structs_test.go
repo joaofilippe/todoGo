@@ -33,6 +33,6 @@ func Test_GetTags(t *testing.T) {
 func Test_SetStringFieldValueByName(t *testing.T) {
 	tS := new(TSt)
 
-	err := SetStringFieldValueByName(tS, "Name", "João Filippe")
+	err := SetStringFieldValueByName(tS, "Nme", "João Filippe")
 	assert.Nil(t, err, "não deveria retornar erro")
 }
