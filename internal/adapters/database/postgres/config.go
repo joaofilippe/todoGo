@@ -13,6 +13,7 @@ import (
 	"github.com/joaofilippe/todoGo/config"
 	"github.com/joaofilippe/todoGo/pkg/enum"
 	"github.com/joaofilippe/todoGo/pkg/logger"
+	"github.com/joaofilippe/todoGo/pkg/structs"
 )
 
 type Config struct {
@@ -97,17 +98,16 @@ func GetConfigFromYaml(log *logger.Logger, appConfig *config.App, c string) *Con
 func GetConfigFromEnv() *Connection {
 	config := new(Config)
 
-	structE := reflect.ValueOf(config).Elem()
-	structT := reflect.TypeOf(*config)
+	configT := reflect.TypeOf(config)
 
-	for i := 0; i < structE.NumField(); i++ {
-		fieldT := structT.Field(i)
-		fieldName := fieldT.Name
-		tagValue := fieldT.Tag.Get("env")
-		field := structE.FieldByName(fieldName)
+	for i:= 0; i < configT.NumField(); i++ {
+		tagName := configT.Field(i).Tag.Get("env")
+		value := os.Getenv(tagName)
 
-		rs := reflect.ValueOf(os.Getenv(tagValue))
-		field.Set(rs)
+		err := structs.SetStringFieldValueByName(config, configT.Field(i).Name, value)
+		if err != nil {
+			return nil
+		}
 	}
 
 	return &Connection{}
