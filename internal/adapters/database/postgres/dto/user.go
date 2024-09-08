@@ -8,7 +8,7 @@ import (
 	// "github.com/lib/pq"
 
 	userDB "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
-	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
+	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
 	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
 
@@ -28,7 +28,7 @@ type UserDTO struct {
 }
 
 // UserFromDomain is a function that creates a new UserDTO
-func UserFromDomain(u usersModels.User) *UserDTO {
+func UserFromDomain(u userEntity.User) *UserDTO {
 	return &UserDTO{
 		ID:        u.ID,
 		FirstName: u.FirstName,
@@ -71,8 +71,8 @@ func UserFromDB(user userDB.UserDB) *UserDTO {
 }
 
 // ToDomain converts the UserDTO to a User domain model
-func (u *UserDTO) ToDomain() usersModels.User {
-	return usersModels.User{
+func (u *UserDTO) ToDomain() userEntity.User {
+	return userEntity.User{
 		ID:        u.ID,
 		FirstName: u.FirstName,
 		LastName:  u.LastName,

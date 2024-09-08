@@ -67,6 +67,7 @@ func GetConnection(log *logger.Logger, appConfig *config.App, c string) *Connect
 	return GetConfigFromEnv()
 }
 
+// GetConfigFromYaml returns a connection from an yaml file
 func GetConfigFromYaml(log *logger.Logger, appConfig *config.App, c string) *Connection {
 	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/%s.yaml", appConfig.ConfigPath, c))
 	if err != nil {
@@ -80,27 +81,22 @@ func GetConfigFromYaml(log *logger.Logger, appConfig *config.App, c string) *Con
 		log.Fatalf(fmt.Errorf("can't unmarshal %s.yaml file", c))
 	}
 
-	if appConfig.Env != enum.Environment(1) {
-		configDB.Host = "host.docker.internal"
-	}
-
 	conn := NewConnection(configDB)
 
 	if err := conn.Connection.Ping(); err != nil {
-		log.Fatalf(fmt.Errorf("can't connect to %s database. Error: %s", c, err.Error()))
-	} else {
 		log.Fatalf(fmt.Errorf("can't connect to %s database. Error: %s", c, err.Error()))
 	}
 
 	return conn
 }
 
+// GetConfigFromEnv returns a connection from environment variables
 func GetConfigFromEnv() *Connection {
 	config := new(Config)
 
 	configT := reflect.TypeOf(config)
 
-	for i:= 0; i < configT.NumField(); i++ {
+	for i := 0; i < configT.NumField(); i++ {
 		tagName := configT.Field(i).Tag.Get("env")
 		value := os.Getenv(tagName)
 

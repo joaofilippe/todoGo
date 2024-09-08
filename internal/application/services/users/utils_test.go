@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	models "github.com/joaofilippe/todoGo/internal/application/models/users"
+	entity "github.com/joaofilippe/todoGo/internal/application/entities/user"
 )
 
 func Test_GenerateToken(t *testing.T) {
@@ -18,7 +18,7 @@ func Test_GenerateToken(t *testing.T) {
 
 	uuid := uuid.New()
 
-	user := models.User{
+	user := entity.User{
 		ID:        uuid,
 		FirstName: "João",
 		LastName:  "Rodrigues",

@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	userDB "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
-	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
+	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
 )
 
 // UserDTO is the model for the user table
@@ -21,7 +21,7 @@ type NewUserDTO struct {
 }
 
 // NewUserFromDomain is a function that creates a new UserDTO from Domain
-func NewUserFromDomain(u usersModels.NewUser) *NewUserDTO {
+func NewUserFromDomain(u userEntity.NewUser) *NewUserDTO {
 	return &NewUserDTO{
 		ID:        u.ID,
 		FirstName: u.FirstName,

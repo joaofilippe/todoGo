@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	_ "github.com/lib/pq"
 
 	"github.com/joaofilippe/todoGo/config"
@@ -33,8 +31,6 @@ func main() {
 	if err := webserver.NewServer(application).Run(); err != nil {
 		logger.Logger.Error(err.Error())
 	}
-
-	fmt.Println(masterConnectionDB, slaveConnectionDB)
 }
 
 func getDbConnection(log *logger.Logger, appConfig *config.App, c string) *postgres.Connection {

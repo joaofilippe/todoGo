@@ -2,19 +2,19 @@ package users
 
 import (
 	"github.com/google/uuid"
-	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
+	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
 )
 
 type IService interface {
-	Create(user usersModels.NewUser) (uuid.UUID, error)
-	GetUserByID(id uuid.UUID) (usersModels.User, error)
-	GetUserByUsername(username string) (usersModels.User, error)
-	GetUserByEmail(email string) (usersModels.User, error)
-	Login(user usersModels.Login) (string, error)
+	Create(user userEntity.NewUser) (uuid.UUID, error)
+	GetUserByID(id uuid.UUID) (userEntity.User, error)
+	GetUserByUsername(username string) (userEntity.User, error)
+	GetUserByEmail(email string) (userEntity.User, error)
+	Login(user userEntity.Login) (string, error)
 }
 
 type IUtils interface {
-	validateNewUser(user usersModels.NewUser) error
-	validateLogin(user usersModels.Login) error
-	generateToken(user usersModels.User) (string, error)
+	validateNewUser(user userEntity.NewUser) error
+	validateLogin(user userEntity.Login) error
+	generateToken(user userEntity.User) (string, error)
 }

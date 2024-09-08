@@ -7,7 +7,7 @@ import (
 	dto "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/dto"
 	models "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
 	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres/queries"
-	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
+	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
 )
 
 // Database is a struct that defines the user database
@@ -25,7 +25,7 @@ func NewDatabase(master, slave *Connection) *Database {
 }
 
 // CreateUser is a function that creates a user
-func (d *Database) CreateNewUser(n usersModels.NewUser) (error) {
+func (d *Database) CreateNewUser(n userEntity.NewUser) (error) {
 	newUser := dto.NewUserFromDomain(n)
 
 	_, err := d.MasterConnection.Connection.Exec(queries.InsertNewUserQuery,
@@ -46,28 +46,28 @@ func (d *Database) CreateNewUser(n usersModels.NewUser) (error) {
 }
 
 // GetUserByID is a function that gets a user by username
-func (d *Database) GetUserByID(id uuid.UUID) (usersModels.User, error) {
+func (d *Database) GetUserByID(id uuid.UUID) (userEntity.User, error) {
 	var userDB models.UserDB
 
 	err := d.SlaveConnection.Connection.Get(&userDB, queries.SelectUserQueryByID, id.String())
 	if err != nil && err != sql.ErrNoRows{
-		return usersModels.User{}, err
+		return userEntity.User{}, err
 	}
 
 	return dto.UserFromDB(userDB).ToDomain(), nil
 }
 
 // GetUserByEmail is a function that gets a user by username
-func (d *Database) GetUserByEmail(email string) (usersModels.User, error) {
+func (d *Database) GetUserByEmail(email string) (userEntity.User, error) {
 	var userDB models.UserDB
 
 	err := d.SlaveConnection.Connection.Get(&userDB, queries.SelectUserQueryByEmail, email)
 	if err == sql.ErrNoRows {
-		return usersModels.User{}, nil
+		return userEntity.User{}, nil
 	}
 
 	if err != nil{
-		return usersModels.User{}, err
+		return userEntity.User{}, err
 	}
 
 	
@@ -76,12 +76,12 @@ func (d *Database) GetUserByEmail(email string) (usersModels.User, error) {
 }
 
 // GetUserByUsername is a function that gets a user by username
-func (d *Database) GetUserByUsername(username string) (usersModels.User, error) {
+func (d *Database) GetUserByUsername(username string) (userEntity.User, error) {
 	var userDB models.UserDB
 
 	err := d.SlaveConnection.Connection.Get(&userDB, queries.SelectUserQueryByUsername, username)
 	if err != nil && err != sql.ErrNoRows{
-		return usersModels.User{}, err
+		return userEntity.User{}, err
 	}
 
 	return dto.UserFromDB(userDB).ToDomain(), nil

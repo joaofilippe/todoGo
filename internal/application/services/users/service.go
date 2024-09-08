@@ -5,7 +5,7 @@ import (
 
 	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
 	consts "github.com/joaofilippe/todoGo/internal/application/consts"
-	usersModels "github.com/joaofilippe/todoGo/internal/application/models/users"
+	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
 	userRepo "github.com/joaofilippe/todoGo/internal/application/repository/user"
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
@@ -33,7 +33,7 @@ func NewUserService(
 }
 
 // CreateUser is a usecase to create a new user and returns the id of the new user
-func (s *Service) Create(newUser usersModels.NewUser) (uuid.UUID, error) {
+func (s *Service) Create(newUser userEntity.NewUser) (uuid.UUID, error) {
 	newUser.ID = uuid.New()
 	valid, err := newUser.Validate()
 	if err != nil {
@@ -62,7 +62,7 @@ func (s *Service) Create(newUser usersModels.NewUser) (uuid.UUID, error) {
 }
 
 // Login is a usecase to login a user and returns a token
-func (s *Service) Login(login usersModels.Login) (string, error) {
+func (s *Service) Login(login userEntity.Login) (string, error) {
 	if err := s.Utils.validateLogin(login); err != nil {
 		return "", err
 	}
@@ -101,16 +101,16 @@ func (s *Service) Login(login usersModels.Login) (string, error) {
 }
 
 // GetUserByID returns a user by id
-func (s *Service) GetUserByID(id uuid.UUID) (usersModels.User, error) {
+func (s *Service) GetUserByID(id uuid.UUID) (userEntity.User, error) {
 	return s.UserRepository.GetUserByID(id)
 }
 
 // GetUserByUsername returns a user by username
-func (s *Service) GetUserByUsername(username string) (usersModels.User, error) {
+func (s *Service) GetUserByUsername(username string) (userEntity.User, error) {
 	return s.UserRepository.GetUserByUsername(username)
 }
 
 // GetUserByEmail returns a user by email
-func (s *Service) GetUserByEmail(email string) (usersModels.User, error) {
+func (s *Service) GetUserByEmail(email string) (userEntity.User, error) {
 	return s.UserRepository.GetUserByEmail(email)
 }
