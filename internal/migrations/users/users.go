@@ -1,6 +1,6 @@
 package migrations
 
-import "github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
+import "github.com/joaofilippe/todoGo/internal/adapters/data/postgres"
 
 // CreateUsersTable creates the users table
 func CreateUsersTable(conn *postgres.Connection) error {

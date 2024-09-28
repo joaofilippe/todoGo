@@ -3,7 +3,7 @@ package migrations
 const (
 	// CreateUserTableQuery is the query to create the user table
 	CreateUserTableQuery = `
-			CREATE TABLE IF NOT EXISTS public.user
+			CREATE TABLE IF NOT EXISTS public.users
 		(
 		    id         UUID                                NOT NULL
 		        CONSTRAINT id_user_pk
@@ -13,7 +13,6 @@ const (
 		    username   VARCHAR                             NOT NULL,
 		    email      VARCHAR                             NOT NULL,
 		    password   VARCHAR                             NOT NULL,
-		    todo_ids   UUID[],
 		    birthdate  DATE                                NOT NULL,
 		    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 		    updated_at TIMESTAMP,

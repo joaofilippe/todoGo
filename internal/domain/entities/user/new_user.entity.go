@@ -1,4 +1,4 @@
-package users
+package user
 
 import (
 	"errors"
@@ -12,7 +12,7 @@ import (
 
 // NewUser represents a new user
 type NewUser struct {
-	ID 	  uuid.UUID
+	ID        uuid.UUID
 	FirstName string
 	LastName  string
 	Username  string
@@ -32,7 +32,7 @@ func (n NewUser) Validate() (bool, error) {
 		return false, errors.New("Empty fields: " + strings.Join(fields, ", "))
 	}
 
-	emailValid:= email.Validate(n.Email)
+	emailValid := email.Validate(n.Email)
 	if !emailValid {
 		return false, errors.New("Invalid email")
 	}

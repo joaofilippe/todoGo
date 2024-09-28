@@ -1,4 +1,4 @@
-package users
+package user
 
 import (
 	"time"
@@ -19,4 +19,3 @@ type User struct {
 	UpdatedAt time.Time
 	Active    bool
 }
-

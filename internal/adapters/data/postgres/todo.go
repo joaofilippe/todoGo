@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	todoModels "github.com/joaofilippe/todoGo/internal/application/entities/todo"
+	todoModels "github.com/joaofilippe/todoGo/internal/domain/entities/todo"
 )
 
 type TodoRepository struct {

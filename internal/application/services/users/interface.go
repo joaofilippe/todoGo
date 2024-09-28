@@ -2,7 +2,7 @@ package users
 
 import (
 	"github.com/google/uuid"
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
 type IService interface {

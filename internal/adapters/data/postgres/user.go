@@ -4,10 +4,10 @@ import (
 	"database/sql"
 
 	"github.com/google/uuid"
-	dto "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/dto"
-	models "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
-	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres/queries"
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	dto "github.com/joaofilippe/todoGo/internal/adapters/data/postgres/dto"
+	models "github.com/joaofilippe/todoGo/internal/adapters/data/postgres/models"
+	"github.com/joaofilippe/todoGo/internal/adapters/data/postgres/queries"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
 // Database is a struct that defines the user database
@@ -25,7 +25,7 @@ func NewDatabase(master, slave *Connection) *Database {
 }
 
 // CreateUser is a function that creates a user
-func (d *Database) CreateNewUser(n userEntity.NewUser) (error) {
+func (d *Database) CreateNewUser(n userEntity.NewUser) error {
 	newUser := dto.NewUserFromDomain(n)
 
 	_, err := d.MasterConnection.Connection.Exec(queries.InsertNewUserQuery,
@@ -50,7 +50,7 @@ func (d *Database) GetUserByID(id uuid.UUID) (userEntity.User, error) {
 	var userDB models.UserDB
 
 	err := d.SlaveConnection.Connection.Get(&userDB, queries.SelectUserQueryByID, id.String())
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return userEntity.User{}, err
 	}
 
@@ -66,11 +66,9 @@ func (d *Database) GetUserByEmail(email string) (userEntity.User, error) {
 		return userEntity.User{}, nil
 	}
 
-	if err != nil{
+	if err != nil {
 		return userEntity.User{}, err
 	}
-
-	
 
 	return dto.UserFromDB(userDB).ToDomain(), nil
 }
@@ -80,7 +78,7 @@ func (d *Database) GetUserByUsername(username string) (userEntity.User, error) {
 	var userDB models.UserDB
 
 	err := d.SlaveConnection.Connection.Get(&userDB, queries.SelectUserQueryByUsername, username)
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return userEntity.User{}, err
 	}
 

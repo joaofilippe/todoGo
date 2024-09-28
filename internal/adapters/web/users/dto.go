@@ -3,14 +3,14 @@ package users
 import (
 	"time"
 
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
 // NewUserDTO represents the new user DTO
 type NewUserDTO struct {
 	FirstName string
 	LastName  string
-	Username string
+	Username  string
 	Email     string
 	Password  string
 	BirthDate string
@@ -28,7 +28,7 @@ func (n *NewUserDTO) FromRequestToDTO(request NewUserRequest) {
 
 // FromDTOToModel converts a DTO to a model
 func (n *NewUserDTO) FromDTOToModel() (userEntity.NewUser, error) {
-	
+
 	newUser := userEntity.NewUser{
 		FirstName: n.FirstName,
 		LastName:  n.LastName,

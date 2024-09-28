@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	todoEntity "github.com/joaofilippe/todoGo/internal/application/entities/todo"
+	todoEntity "github.com/joaofilippe/todoGo/internal/domain/entities/todo"
 )
 
 type TodoDTO struct {

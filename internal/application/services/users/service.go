@@ -3,9 +3,9 @@ package users
 import (
 	"github.com/google/uuid"
 
-	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
+	"github.com/joaofilippe/todoGo/internal/adapters/data/postgres"
 	consts "github.com/joaofilippe/todoGo/internal/application/consts"
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 	userRepo "github.com/joaofilippe/todoGo/internal/application/repository/user"
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
@@ -14,21 +14,18 @@ import (
 type Service struct {
 	UserRepository userRepo.IRepository
 	UserService    IService
-	Utils          IUtils
-	Logger         *logger.Logger
+ 	Logger         *logger.Logger
 }
 
 // NewUserService creates a new user service
 func NewUserService(
 	writer *postgres.Connection,
 	reader *postgres.Connection,
-	utils IUtils,
-	logger *logger.Logger,
+ 	logger *logger.Logger,
 ) *Service {
 	return &Service{
 		UserRepository: userRepo.NewUserRepository(writer, reader),
-		Utils:          utils,
-		Logger:         logger,
+ 		Logger:         logger,
 	}
 }
 
@@ -63,41 +60,7 @@ func (s *Service) Create(newUser userEntity.NewUser) (uuid.UUID, error) {
 
 // Login is a usecase to login a user and returns a token
 func (s *Service) Login(login userEntity.Login) (string, error) {
-	if err := s.Utils.validateLogin(login); err != nil {
-		return "", err
-	}
-
-	if login.Email != "" {
-		user, err := s.UserRepository.GetUserByEmail(login.Email)
-		if err != nil {
-			return "", err
-		}
-
-		if user.ID == uuid.Nil {
-			return "", consts.ErrUserDoesNotExist
-		}
-
-		if user.Password != login.Password {
-			return "", consts.ErrInvalidPassword
-		}
-
-		return s.Utils.generateToken(user)
-	}
-
-	user, err := s.UserRepository.GetUserByUsername(login.Username)
-	if err != nil {
-		return "", err
-	}
-
-	if user.ID == uuid.Nil {
-		return "", consts.ErrUserDoesNotExist
-	}
-
-	if user.Password != login.Password {
-		return "", consts.ErrInvalidPassword
-	}
-
-	return s.Utils.generateToken(user)
+	return "", nil
 }
 
 // GetUserByID returns a user by id

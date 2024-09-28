@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/uuid"
 
-	userDB "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	userDB "github.com/joaofilippe/todoGo/internal/adapters/data/postgres/models"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
 // UserDTO is the model for the user table

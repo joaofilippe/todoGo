@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 	// "github.com/lib/pq"
 
-	userDB "github.com/joaofilippe/todoGo/internal/adapters/database/postgres/models"
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	userDB "github.com/joaofilippe/todoGo/internal/adapters/data/postgres/models"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
 
@@ -50,7 +50,7 @@ func UserFromDB(user userDB.UserDB) *UserDTO {
 	if user.TodoIDs.Valid {
 		todoIDs, _ = uuid_helper.ConvertStringToArray(user.TodoIDs.String[1 : len(user.TodoIDs.String)-1])
 	}
-	
+
 	birthDate, _ := time.Parse(time.RFC3339, user.BirthDate.String)
 	createdAt, _ := time.Parse(time.RFC3339, user.CreatedAt.String)
 	updatedAt, _ := time.Parse(time.RFC3339, user.UpdatedAt.String)

@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/google/uuid"
-	userEntity "github.com/joaofilippe/todoGo/internal/application/entities/user"
+	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
 // IRepository represents the user repository
@@ -21,5 +21,5 @@ type IReader interface {
 	GetUserByID(id uuid.UUID) (userEntity.User, error)
 	GetUserByUsername(username string) (userEntity.User, error)
 	GetUserByEmail(email string) (userEntity.User, error)
-	CheckUserExists(username, email string) (bool, error) 
+	CheckUserExists(username, email string) (bool, error)
 }

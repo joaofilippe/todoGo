@@ -4,7 +4,7 @@ import (
 	_ "github.com/lib/pq"
 
 	"github.com/joaofilippe/todoGo/config"
-	"github.com/joaofilippe/todoGo/internal/adapters/database/postgres"
+	"github.com/joaofilippe/todoGo/internal/adapters/data/postgres"
 	"github.com/joaofilippe/todoGo/internal/adapters/web"
 	"github.com/joaofilippe/todoGo/internal/application"
 	"github.com/joaofilippe/todoGo/internal/application/services/users"
@@ -24,8 +24,7 @@ func main() {
 		logger.Logger.Error(err.Error())
 	}
 
-	userUtils := &users.UserUtils{}
-	userService := users.NewUserService(masterConnectionDB, slaveConnectionDB, userUtils, logger)
+	userService := users.NewUserService(masterConnectionDB, slaveConnectionDB, logger)
 	application := application.NewApplication(userService, logger)
 
 	if err := webserver.NewServer(application).Run(); err != nil {
@@ -35,7 +34,7 @@ func main() {
 
 func getDbConnection(log *logger.Logger, appConfig *config.App, c string) *postgres.Connection {
 	if appConfig.Env == enum.Development {
-		return postgres.GetConfigFromYaml(log, appConfig,c)
+		return postgres.GetConfigFromYaml(log, appConfig, c)
 	}
 
 	return &postgres.Connection{}
