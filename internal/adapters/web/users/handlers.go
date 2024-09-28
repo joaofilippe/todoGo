@@ -62,7 +62,7 @@ func (u *Web) Create(w http.ResponseWriter, r *http.Request) {
 func (u *Web) GetUserByUsername(w http.ResponseWriter, r *http.Request) {
 	username := r.URL.Query().Get("username")
 
-	user, err := u.Application.UserService.GetUserByUsername(username)
+	user, err := u.Application.UserService.GetByUsername(username)
 	if err != nil {
 		render.Render(w, r, ErrCannotGetUser)
 		return
@@ -81,7 +81,7 @@ func (u *Web) GetUserByFilter(w http.ResponseWriter, r *http.Request) {
 
 	var users []dto.User
 	if username != "" {
-		user, err := u.Application.UserService.GetUserByUsername(username)
+		user, err := u.Application.UserService.GetByUsername(username)
 		if err != nil {
 			render.Render(w, r, ErrCannotGetUser)
 			return
@@ -93,7 +93,7 @@ func (u *Web) GetUserByFilter(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if email != "" {
-		user, err := u.Application.UserService.GetUserByEmail(email)
+		user, err := u.Application.UserService.GetByEmail(email)
 		if err != nil {
 			render.Render(w, r, ErrCannotGetUser)
 			return
@@ -135,7 +135,7 @@ func (u *Web) GetUserByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := u.Application.UserService.GetUserByID(id)
+	user, err := u.Application.UserService.GetByID(id)
 	if err != nil {
 		render.Render(w, r, ErrCannotGetUser)
 		return
@@ -151,7 +151,7 @@ func (u *Web) GetUserByID(w http.ResponseWriter, r *http.Request) {
 func (u *Web) GetUserByEmail(w http.ResponseWriter, r *http.Request) {
 	email := r.URL.Query().Get("email")
 
-	user, err := u.Application.UserService.GetUserByEmail(email)
+	user, err := u.Application.UserService.GetByEmail(email)
 	if err != nil {
 		render.Render(w, r, ErrCannotGetUser)
 		return

@@ -1,4 +1,4 @@
-package user
+package user_usecases
 
 import (
 	"github.com/google/uuid"
@@ -7,16 +7,16 @@ import (
 )
 
 type CreateUseCase struct {
-	repository *userRepo.IUserRepo
+	repository userRepo.IUserRepo
 }
 
-func NewCreateUserUseCase(userRepository *userRepo.IUserRepo) CreateUseCase {
+func NewCreateUserUseCase(userRepository userRepo.IUserRepo) CreateUseCase {
 	return CreateUseCase{
 		repository: userRepository,
 	}
 }
 
 func (c *CreateUseCase) Execute(newUser user.NewUser) (uuid.UUID, error) {
-	return c.repository.Writer.Create(newUser)
+	return c.repository.CreateNewUser(newUser)
 }
 

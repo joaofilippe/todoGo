@@ -11,7 +11,12 @@ type UserService struct {
 	loginUsecase  userUsecases.LoginUsecase
 }
 
-func NewUserService()
+func NewUserService(
+	create userUsecases.CreateUseCase,
+	login userUsecases.LoginUsecase,
+) *UserService {
+	return &UserService{}
+}
 
 func (s *UserService) Create(newUser user.NewUser) (uuid.UUID, error) {
 	return s.createUsecase.Execute(newUser)
@@ -19,4 +24,16 @@ func (s *UserService) Create(newUser user.NewUser) (uuid.UUID, error) {
 
 func (s *UserService) Login(login user.Login) (string, error) {
 	return s.loginUsecase.Execute(login)
+}
+
+func (s *UserService) GetByID(id uuid.UUID) (user.User, error) {
+	return user.User{}, nil
+}
+
+func (s *UserService) GetByEmail(email string) (user.User, error) {
+	return user.User{}, nil
+}
+
+func (s *UserService) GetByUsername(username string) (user.User, error) {
+	return user.User{}, nil
 }

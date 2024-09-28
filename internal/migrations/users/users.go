@@ -1,15 +1,17 @@
 package migrations
 
-import "github.com/joaofilippe/todoGo/internal/adapters/data/postgres"
+import (
+	infraDatabase "github.com/joaofilippe/todoGo/internal/infra/database"
+)
 
 // CreateUsersTable creates the users table
-func CreateUsersTable(conn *postgres.Connection) error {
+func CreateUsersTable(conn *infraDatabase.Connection) error {
 	_, err := conn.Connection.Exec(CreateUserTableQuery)
 	return err
 }
 
 // DropUserTable deletes the users table
-func DropUserTable(conn *postgres.Connection) error {
+func DropUserTable(conn *infraDatabase.Connection) error {
 	_, err := conn.Connection.Exec(DropUserTableQuery)
 	return err
 }

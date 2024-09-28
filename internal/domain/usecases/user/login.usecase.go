@@ -1,4 +1,4 @@
-package user
+package user_usecases
 
 import (
 	"os"
@@ -10,17 +10,17 @@ import (
 )
 
 type LoginUsecase struct {
-	repository *userRepo.IUserRepo
+	repository userRepo.IUserRepo
 }
 
-func NewLoginUseCase(userRepository *userRepo.IUserRepo) LoginUsecase {
+func NewLoginUseCase(userRepository userRepo.IUserRepo) LoginUsecase {
 	return LoginUsecase{
 		repository: userRepository,
 	}
 }
 
 func (l *LoginUsecase) Execute(login user.Login) (string, error) {
-	user, err := l.repository.Reader.GetUserByEmail(login.Email)
+	user, err := l.repository.GetUserByEmail(login.Email)
 	if err != nil {
 		return "", err
 	}
@@ -30,7 +30,7 @@ func (l *LoginUsecase) Execute(login user.Login) (string, error) {
 	}
 
 
-	return l.generateToken(*user)
+	return l.generateToken(user)
 }
 
 func (l *LoginUsecase) generateToken(user user.User) (string, error) {

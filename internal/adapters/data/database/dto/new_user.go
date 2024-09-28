@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
-	userDB "github.com/joaofilippe/todoGo/internal/adapters/data/postgres/models"
+	userDB "github.com/joaofilippe/todoGo/internal/adapters/data/database/models"
 	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
