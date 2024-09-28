@@ -1,4 +1,4 @@
-package services
+package user_service
 
 import (
 	"github.com/google/uuid"

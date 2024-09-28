@@ -1,4 +1,4 @@
-package migrations
+package users_migrations
 
 import (
 	infraDatabase "github.com/joaofilippe/todoGo/internal/infra/database"

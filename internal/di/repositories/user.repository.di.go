@@ -1,4 +1,4 @@
-package repositories
+package di_repositories
 
 import (
 	"github.com/joaofilippe/todoGo/config"
@@ -7,7 +7,7 @@ import (
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 
-func NewUserRepository(
+func GetUserRepository(
 	logger *logger.Logger,
 	appConfig *config.App,
 ) *data.UserRepository {

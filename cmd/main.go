@@ -4,30 +4,34 @@ import (
 	_ "github.com/lib/pq"
 
 	"github.com/joaofilippe/todoGo/config"
- 	"github.com/joaofilippe/todoGo/internal/adapters/web"
+	webserver "github.com/joaofilippe/todoGo/internal/adapters/web"
 	"github.com/joaofilippe/todoGo/internal/application"
- 	userMigratons "github.com/joaofilippe/todoGo/internal/migrations/users"
- 	"github.com/joaofilippe/todoGo/pkg/logger"
+	di_connection "github.com/joaofilippe/todoGo/internal/di/connections"
+	di_userusecases "github.com/joaofilippe/todoGo/internal/di/usecases"
+	"github.com/joaofilippe/todoGo/internal/infra/user_service"
+	userMigratons "github.com/joaofilippe/todoGo/internal/migrations/users_migrations"
+	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 
 func main() {
 	logger := logger.NewLogger()
 	appConfig := config.NewApp(*logger)
 
+	masterConnectionDB := di_connection.GetConnection(logger, appConfig, "master")
 
 	if err := userMigratons.CreateUsersTable(masterConnectionDB); err != nil {
 		logger.Logger.Error(err.Error())
 	}
 
-
 	//UseCases
-
-
-	userService := users.NewUserService(masterConnectionDB, slaveConnectionDB, logger)
+	userUsecases := di_userusecases.NewUserUsecases(logger, appConfig)
+	userService := user_service.NewUserService(
+		userUsecases.CreateUser,
+		userUsecases.Login,
+	)
 	application := application.NewApplication(userService, logger)
 
 	if err := webserver.NewServer(application).Run(); err != nil {
 		logger.Logger.Error(err.Error())
 	}
 }
-
