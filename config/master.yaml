@@ -1,5 +1,5 @@
-host: host.docker.internal
+host: localhost
 port: 5432
-user: joaof
-password: joaof123
-dbname: todo
+user: todo_go
+password: 123456
+dbname: todo_go

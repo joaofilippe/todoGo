@@ -5,7 +5,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-ENV ENV=PROD
+ENV ENV=DOCKER
 
 EXPOSE 3000
 EXPOSE 5432
