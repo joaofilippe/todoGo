@@ -18,7 +18,7 @@ func NewUserService(
 	return &UserService{}
 }
 
-func (s *UserService) Create(newUser user.NewUser) (uuid.UUID, error) {
+func (s *UserService) Create(newUser user.User) (uuid.UUID, error) {
 	return s.createUsecase.Execute(newUser)
 }
 

@@ -12,7 +12,7 @@ import (
 )
 
 type IUserWriter interface {
-	CreateNewUser(newUser userEntity.NewUser) (uuid.UUID, error)
+	CreateNewUser(newUser userEntity.User) (uuid.UUID, error)
 }
 
 type IUserReader interface {
@@ -30,7 +30,7 @@ type UserDatabaseReader struct {
 }
 
 // CreateUser is a function that creates a user
-func (w *UserDatabaseWriter) CreateNewUser(newUser userEntity.NewUser) (uuid.UUID, error) {
+func (w *UserDatabaseWriter) CreateNewUser(newUser userEntity.User) (uuid.UUID, error) {
 	newUserDB := dto.NewUserFromDomain(newUser)
 
 	_, err :=

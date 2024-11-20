@@ -27,9 +27,9 @@ func (n *NewUserDTO) FromRequestToDTO(request NewUserRequest) {
 }
 
 // FromDTOToModel converts a DTO to a model
-func (n *NewUserDTO) FromDTOToModel() (userEntity.NewUser, error) {
+func (n *NewUserDTO) FromDTOToModel() (userEntity.User, error) {
 
-	newUser := userEntity.NewUser{
+	newUser := userEntity.User{
 		FirstName: n.FirstName,
 		LastName:  n.LastName,
 		Username:  n.Username,
@@ -39,7 +39,7 @@ func (n *NewUserDTO) FromDTOToModel() (userEntity.NewUser, error) {
 
 	birthDate, err := time.Parse("2006-01-02", n.BirthDate)
 	if err != nil {
-		return userEntity.NewUser{}, err
+		return userEntity.User{}, err
 	}
 
 	newUser.BirthDate = birthDate

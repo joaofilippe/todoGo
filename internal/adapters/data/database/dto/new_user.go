@@ -21,7 +21,7 @@ type NewUserDTO struct {
 }
 
 // NewUserFromDomain is a function that creates a new UserDTO from Domain
-func NewUserFromDomain(u userEntity.NewUser) *NewUserDTO {
+func NewUserFromDomain(u userEntity.User) *NewUserDTO {
 	return &NewUserDTO{
 		ID:        u.ID,
 		FirstName: u.FirstName,

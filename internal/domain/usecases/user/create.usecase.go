@@ -16,7 +16,7 @@ func NewCreateUserUseCase(userRepository userRepo.IUserRepo) CreateUseCase {
 	}
 }
 
-func (c *CreateUseCase) Execute(newUser user.NewUser) (uuid.UUID, error) {
+func (c *CreateUseCase) Execute(newUser user.User) (uuid.UUID, error) {
 	return c.repository.CreateNewUser(newUser)
 }
 

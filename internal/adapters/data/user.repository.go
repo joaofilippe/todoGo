@@ -12,7 +12,7 @@ type UserRepository struct {
 	Reader database.IUserReader
 }
 
-func (u *UserRepository) CreateNewUser(newUser userEntity.NewUser) (uuid.UUID, error) {
+func (u *UserRepository) CreateNewUser(newUser userEntity.User) (uuid.UUID, error) {
 	panic("TODO: Implement")
 }
 
