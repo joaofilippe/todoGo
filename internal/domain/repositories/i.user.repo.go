@@ -12,3 +12,12 @@ type IUserRepo interface {
 	GetUserByUsername(username string) (userEntity.User, error)
 }
 
+type IUserWriter interface {
+	CreateNewUser(newUser userEntity.User) (uuid.UUID, error)
+}
+
+type IUserReader interface {
+	GetUserByID(id uuid.UUID) (userEntity.User, error)
+	GetUserByEmail(email string) (userEntity.User, error)
+	GetUserByUsername(username string) (userEntity.User, error)
+}
