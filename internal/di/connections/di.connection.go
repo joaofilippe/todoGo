@@ -1,16 +1,17 @@
 package di_connection
 
 import (
+	"sync"
+
 	"github.com/joaofilippe/todoGo/config"
 	"github.com/joaofilippe/todoGo/internal/infra/database"
 	"github.com/joaofilippe/todoGo/pkg/enum"
 	"github.com/joaofilippe/todoGo/pkg/logger"
-	"sync"
 )
 
 var (
-	masterConnectionDB *infraDatabase.Connection
-	slaveConnectionDB  *infraDatabase.Connection
+	masterConnectionDB *database.Connection
+	slaveConnectionDB  *database.Connection
 	mu                 sync.Mutex
 )
 
@@ -18,26 +19,26 @@ func GetConnection(
 	log *logger.Logger,
 	appConfig *config.App,
 	c string,
-) *infraDatabase.Connection {
+) *database.Connection {
 	mu.Lock()
 	defer mu.Unlock()
 
-	if appConfig.Env != enum.Development {
-		return &infraDatabase.Connection{}
+	if appConfig.Env() != enum.Development {
+		return &database.Connection{}
 	}
 
 	switch c {
 	case "master":
 		if masterConnectionDB == nil {
-			masterConnectionDB = infraDatabase.GetConfigFromYaml(log, appConfig, c)
+			masterConnectionDB = database.GetConfigFromYaml(log, appConfig, c)
 		}
 		return masterConnectionDB
 	case "slave":
 		if slaveConnectionDB == nil {
-			slaveConnectionDB = infraDatabase.GetConfigFromYaml(log, appConfig, c)
+			slaveConnectionDB = database.GetConfigFromYaml(log, appConfig, c)
 		}
 		return slaveConnectionDB
 	default:
-		return &infraDatabase.Connection{}
+		return &database.Connection{}
 	}
 }

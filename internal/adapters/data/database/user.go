@@ -4,11 +4,11 @@ import (
 	"database/sql"
 
 	"github.com/google/uuid"
-	"github.com/joaofilippe/todoGo/internal/infra/database"
 	"github.com/joaofilippe/todoGo/internal/adapters/data/database/dto"
 	"github.com/joaofilippe/todoGo/internal/adapters/data/database/models"
 	"github.com/joaofilippe/todoGo/internal/adapters/data/database/queries"
 	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/infra/database"
 )
 
 type IUserWriter interface {
@@ -22,11 +22,11 @@ type IUserReader interface {
 }
 
 type UserDatabaseWriter struct {
-	Conn *infraDatabase.Connection
+	Conn *database.Connection
 }
 
 type UserDatabaseReader struct {
-	Conn *infraDatabase.Connection
+	Conn *database.Connection
 }
 
 // CreateUser is a function that creates a user

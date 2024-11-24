@@ -1,17 +1,17 @@
 package users_migrations
 
 import (
-	infraDatabase "github.com/joaofilippe/todoGo/internal/infra/database"
+	"github.com/joaofilippe/todoGo/internal/infra/database"
 )
 
 // CreateUsersTable creates the users table
-func CreateUsersTable(conn *infraDatabase.Connection) error {
-	_, err := conn.Connection.Exec(CreateUserTableQuery)
+func CreateUsersTable(conn *database.Connection) error {
+	_, err := conn.GetMaster().Exec(CreateUserTableQuery)
 	return err
 }
 
 // DropUserTable deletes the users table
-func DropUserTable(conn *infraDatabase.Connection) error {
-	_, err := conn.Connection.Exec(DropUserTableQuery)
+func DropUserTable(conn *database.Connection) error {
+	_, err := conn.GetMaster().Exec(DropUserTableQuery)
 	return err
 }
