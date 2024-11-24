@@ -1,8 +1,8 @@
-package di_data
+package datadi
 
 import (
 	"github.com/joaofilippe/todoGo/config"
-	"github.com/joaofilippe/todoGo/internal/adapters/data/database"
+	userdatabase "github.com/joaofilippe/todoGo/internal/adapters/data/database/user"
 	di_connection "github.com/joaofilippe/todoGo/internal/di/connections"
 
 	"github.com/joaofilippe/todoGo/pkg/logger"
@@ -12,19 +12,20 @@ import (
 func GetUserDatabaseWriter(
 	logger *logger.Logger,
 	appConfig *config.App,
-) *database.UserDatabaseWriter {
+) *userdatabase.Writer {
 	masterConn := di_connection.GetConnection(logger, appConfig)
-	return &database.UserDatabaseWriter{
+	return &userdatabase.Writer{
 		Conn: masterConn,
 	}
 }
+
 // GetUserDatabaseReader returns a new UserDatabaseReader with a slave connection.
 func GetUserDatabaseReader(
 	logger *logger.Logger,
 	appConfig *config.App,
-) *database.UserDatabaseReader {
+) *userdatabase.Reader {
 	slaveConn := di_connection.GetConnection(logger, appConfig)
-	return &database.UserDatabaseReader{
+	return &userdatabase.Reader{
 		Conn: slaveConn,
 	}
 }

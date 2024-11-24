@@ -1,15 +1,14 @@
-package dto
+package userdatabase
 
 import (
 	"time"
 
 	"github.com/google/uuid"
 
-	userDB "github.com/joaofilippe/todoGo/internal/adapters/data/database/models"
 	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 )
 
-// UserDTO is the model for the user table
+// NewUserDTO is the model for the user table
 type NewUserDTO struct {
 	ID        uuid.UUID
 	FirstName string
@@ -33,9 +32,9 @@ func NewUserFromDomain(u userEntity.User) *NewUserDTO {
 	}
 }
 
-// ToDB converts the UserDTO to a NewUserDB
-func (u *NewUserDTO) NewUserToDB() userDB.NewUserDB {
-	return userDB.NewUserDB{
+// NewUserToDB converts the UserDTO to a NewUserDB
+func (u *NewUserDTO) NewUserToDB() NewUserDB {
+	return NewUserDB{
 		ID:        u.ID,
 		FirstName: u.FirstName,
 		LastName:  u.LastName,

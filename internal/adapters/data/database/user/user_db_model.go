@@ -1,4 +1,4 @@
-package models
+package userdatabase
 
 import (
 	"database/sql"

@@ -1,4 +1,4 @@
-package dto
+package userdatabase
 
 import (
 	"database/sql"
@@ -7,7 +7,6 @@ import (
 	"github.com/google/uuid"
 	// "github.com/lib/pq"
 
-	userDB "github.com/joaofilippe/todoGo/internal/adapters/data/database/models"
 	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
 	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
@@ -45,7 +44,7 @@ func UserFromDomain(u userEntity.User) *UserDTO {
 }
 
 // UserFromDB converts the UserDB to a UserDTO
-func UserFromDB(user userDB.UserDB) *UserDTO {
+func UserFromDB(user UserDB) *UserDTO {
 	var todoIDs []uuid.UUID
 	if user.TodoIDs.Valid {
 		todoIDs, _ = uuid_helper.ConvertStringToArray(user.TodoIDs.String[1 : len(user.TodoIDs.String)-1])
@@ -88,8 +87,8 @@ func (u *UserDTO) ToDomain() userEntity.User {
 }
 
 // ToDB converts the UserDTO to a UserDB
-func (u *UserDTO) ToDB() userDB.UserDB {
-	return userDB.UserDB{
+func (u *UserDTO) ToDB() UserDB {
+	return UserDB{
 		ID:        u.ID,
 		FirstName: u.FirstName,
 		LastName:  u.LastName,

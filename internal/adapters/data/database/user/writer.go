@@ -1,18 +1,20 @@
-package database
+package userdatabase
 
 import (
 	"github.com/google/uuid"
-	"github.com/joaofilippe/todoGo/internal/adapters/data/database/dto"
 	"github.com/joaofilippe/todoGo/internal/adapters/data/database/queries"
 	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/infra/database"
 )
 
-
+type Writer struct {
+	Conn *database.Connection
+}
 
 // CreateUser is a function that creates a user
-func (w *UserDatabaseWriter) CreateNewUser(newUser userEntity.User) (uuid.UUID, error) {
+func (w *Writer) CreateNewUser(newUser userEntity.User) (uuid.UUID, error) {
 	tx := w.Conn.GetMaster().MustBegin()
-	newUserDB := dto.NewUserFromDomain(newUser)
+	newUserDB := NewUserFromDomain(newUser)
 
 	_, err :=
 		tx.Exec(
