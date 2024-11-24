@@ -1,4 +1,4 @@
-package di_repositories
+package repositoriesdi
 
 import (
 	"github.com/joaofilippe/todoGo/config"

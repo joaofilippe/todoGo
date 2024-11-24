@@ -3,7 +3,7 @@ package data
 import (
 	"github.com/google/uuid"
 	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
-	irepositories "github.com/joaofilippe/todoGo/internal/domain/repositories"
+	irepositories "github.com/joaofilippe/todoGo/internal/domain/irepositories"
 )
 
 // UserRepository represents the user repository

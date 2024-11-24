@@ -1,4 +1,4 @@
-package user_usecases
+package userusecases
 
 import (
 	"os"
@@ -6,14 +6,14 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/joaofilippe/todoGo/internal/application/consts"
 	"github.com/joaofilippe/todoGo/internal/domain/entities/user"
-	userRepo "github.com/joaofilippe/todoGo/internal/domain/repositories"
+	"github.com/joaofilippe/todoGo/internal/domain/irepositories"
 )
 
 type LoginUsecase struct {
-	repository userRepo.IUserRepo
+	repository irepositories.IUserRepo
 }
 
-func NewLoginUseCase(userRepository userRepo.IUserRepo) LoginUsecase {
+func NewLoginUseCase(userRepository irepositories.IUserRepo) LoginUsecase {
 	return LoginUsecase{
 		repository: userRepository,
 	}

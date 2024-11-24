@@ -1,26 +1,26 @@
-package di_userusecases
+package userusecasesdi
 
 import (
 	"github.com/joaofilippe/todoGo/config"
-	"github.com/joaofilippe/todoGo/internal/di/repositories"
+	repositoriesdi "github.com/joaofilippe/todoGo/internal/di/repositories"
 	"github.com/joaofilippe/todoGo/internal/domain/usecases/user"
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 
 type UserUsecases struct {
-	CreateUser user_usecases.CreateUseCase
-	Login      user_usecases.LoginUsecase
+	CreateUser userusecases.CreateUseCase
+	Login      userusecases.LoginUsecase
 }
 
 func NewUserUsecases(
 	logger *logger.Logger,
 	appConfig *config.App,
 ) *UserUsecases {
-	userRepository := di_repositories.GetUserRepository(logger, appConfig)
+	userRepository := repositoriesdi.GetUserRepository(logger, appConfig)
 
 	return &UserUsecases{
-		CreateUser: user_usecases.NewCreateUserUseCase(userRepository),
-		Login:      user_usecases.NewLoginUseCase(userRepository),
+		CreateUser: userusecases.NewCreateUserUseCase(userRepository),
+		Login:      userusecases.NewLoginUseCase(userRepository),
 	}
 
 }

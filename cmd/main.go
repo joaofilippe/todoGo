@@ -26,7 +26,7 @@ func main() {
 	//UseCases
 	userUsecases := di_userusecases.NewUserUsecases(logger, appConfig)
 	userService := user_service.NewUserService(
-		userUsecases.CreateUser,
+		userusecases.CreateUser,
 		userUsecases.Login,
 	)
 	application := application.NewApplication(userService, logger)
