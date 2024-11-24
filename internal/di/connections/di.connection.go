@@ -1,4 +1,4 @@
-package di_connection
+package connectiondi
 
 import (
 	"sync"

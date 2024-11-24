@@ -1,39 +1,46 @@
-package user_service
+package userservice
 
 import (
 	"github.com/google/uuid"
-	"github.com/joaofilippe/todoGo/internal/domain/entities/user"
-	userUsecases "github.com/joaofilippe/todoGo/internal/domain/usecases/user"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
+	"github.com/joaofilippe/todoGo/internal/domain/usecases/user"
 )
 
+// UserService provides user-related services.
 type UserService struct {
-	createUsecase userUsecases.CreateUseCase
-	loginUsecase  userUsecases.LoginUsecase
+	createUsecase userusecases.CreateUseCase
+	loginUsecase  userusecases.LoginUsecase
 }
 
+// NewUserService creates a new instance of UserService.
 func NewUserService(
-	create userUsecases.CreateUseCase,
-	login userUsecases.LoginUsecase,
+	create userusecases.CreateUseCase,
+	login userusecases.LoginUsecase,
 ) *UserService {
 	return &UserService{}
 }
 
-func (s *UserService) Create(newUser user.User) (uuid.UUID, error) {
+// Create creates a new user and returns the user's UUID.
+func (s *UserService) Create(newUser entities.User) (uuid.UUID, error) {
 	return s.createUsecase.Execute(newUser)
 }
 
-func (s *UserService) Login(login user.Login) (string, error) {
+// Login logs in a user and returns a JWT token.
+func (s *UserService) Login(login entities.Login) (string, error) {
 	return s.loginUsecase.Execute(login)
 }
 
-func (s *UserService) GetByID(id uuid.UUID) (user.User, error) {
-	return user.User{}, nil
+// GetByID retrieves a user by their ID.
+func (s *UserService) GetByID(id uuid.UUID) (entities.User, error) {
+	return entities.User{}, nil
 }
 
-func (s *UserService) GetByEmail(email string) (user.User, error) {
-	return user.User{}, nil
+// GetByEmail retrieves a user by their email.
+func (s *UserService) GetByEmail(email string) (entities.User, error) {
+	return entities.User{}, nil
 }
 
-func (s *UserService) GetByUsername(username string) (user.User, error) {
-	return user.User{}, nil
+// GetByUsername retrieves a user by their username.
+func (s *UserService) GetByUsername(username string) (entities.User, error) {
+	return entities.User{}, nil
 }

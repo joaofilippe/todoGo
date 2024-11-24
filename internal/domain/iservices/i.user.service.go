@@ -2,13 +2,13 @@ package services
 
 import (
 	"github.com/google/uuid"
-	"github.com/joaofilippe/todoGo/internal/domain/entities/user"
- )
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
+)
 
 type IUserService interface {
-	Create(newUser user.User) (uuid.UUID, error)
-	Login(login user.Login)(string, error)
-	GetByID(id uuid.UUID) (user.User, error)
-	GetByEmail(email string) (user.User, error)
-	GetByUsername(username string) (user.User, error)
+	Create(newUser entities.User) (uuid.UUID, error)
+	Login(login entities.Login) (string, error)
+	GetByID(id uuid.UUID) (entities.User, error)
+	GetByEmail(email string) (entities.User, error)
+	GetByUsername(username string) (entities.User, error)
 }

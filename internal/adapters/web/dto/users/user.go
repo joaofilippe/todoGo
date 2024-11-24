@@ -2,9 +2,10 @@ package dto
 
 import (
 	"encoding/json"
-	"github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
 )
 
+// User represents a user data transfer object
 type User struct {
 	ID        string `json:"id"`
 	FirstName string `json:"first_name"`
@@ -18,7 +19,7 @@ type User struct {
 }
 
 // FromDomain converts a user domain to a user dto
-func FromDomain(u user.User) *User {
+func FromDomain(u entities.User) *User {
 	return &User{
 		ID:        u.ID.String(),
 		FirstName: u.FirstName,
@@ -32,7 +33,7 @@ func FromDomain(u user.User) *User {
 	}
 }
 
-// FromJSON converts a json to a user dto
+// ToJSON converts a json to a user dto
 func (u *User) ToJSON() []byte {
 	user, _ := json.Marshal(u)
 	return user

@@ -5,35 +5,37 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/joaofilippe/todoGo/internal/application/consts"
-	"github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
 	"github.com/joaofilippe/todoGo/internal/domain/irepositories"
 )
 
+// LoginUsecase handles the user login process.
 type LoginUsecase struct {
 	repository irepositories.IUserRepo
 }
 
+// NewLoginUseCase creates a new instance of LoginUsecase.
 func NewLoginUseCase(userRepository irepositories.IUserRepo) LoginUsecase {
 	return LoginUsecase{
 		repository: userRepository,
 	}
 }
 
-func (l *LoginUsecase) Execute(login user.Login) (string, error) {
+// Execute handles the login process for a user and returns a JWT token if successful.
+func (l *LoginUsecase) Execute(login entities.Login) (string, error) {
 	user, err := l.repository.GetUserByEmail(login.Email)
 	if err != nil {
 		return "", err
 	}
 
-	if user.Password != login.Password{
+	if user.Password != login.Password {
 		return "", nil
 	}
-
 
 	return l.generateToken(user)
 }
 
-func (l *LoginUsecase) generateToken(user user.User) (string, error) {
+func (l *LoginUsecase) generateToken(user entities.User) (string, error) {
 	secretString := os.Getenv("SECRET_KEY")
 	if secretString == "" {
 		return "", consts.ErrSecretKey

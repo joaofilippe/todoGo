@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
-	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
 )
 
 // NewUserDTO is the model for the user table
@@ -20,7 +20,7 @@ type NewUserDTO struct {
 }
 
 // NewUserFromDomain is a function that creates a new UserDTO from Domain
-func NewUserFromDomain(u userEntity.User) *NewUserDTO {
+func NewUserFromDomain(u entities.User) *NewUserDTO {
 	return &NewUserDTO{
 		ID:        u.ID,
 		FirstName: u.FirstName,

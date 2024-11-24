@@ -7,11 +7,13 @@ import (
 	"github.com/joaofilippe/todoGo/pkg/logger"
 )
 
+// UserUsecases contains use cases related to user operations.
 type UserUsecases struct {
-	CreateUser userusecases.CreateUseCase
+	Create userusecases.CreateUseCase
 	Login      userusecases.LoginUsecase
 }
 
+// NewUserUsecases creates a new instance of UserUsecases.
 func NewUserUsecases(
 	logger *logger.Logger,
 	appConfig *config.App,
@@ -19,7 +21,7 @@ func NewUserUsecases(
 	userRepository := repositoriesdi.GetUserRepository(logger, appConfig)
 
 	return &UserUsecases{
-		CreateUser: userusecases.NewCreateUserUseCase(userRepository),
+		Create: userusecases.NewCreateUseCase(userRepository),
 		Login:      userusecases.NewLoginUseCase(userRepository),
 	}
 

@@ -3,7 +3,7 @@ package users
 import (
 	"time"
 
-	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
 )
 
 // NewUserDTO represents the new user DTO
@@ -27,9 +27,9 @@ func (n *NewUserDTO) FromRequestToDTO(request NewUserRequest) {
 }
 
 // FromDTOToModel converts a DTO to a model
-func (n *NewUserDTO) FromDTOToModel() (userEntity.User, error) {
+func (n *NewUserDTO) FromDTOToModel() (entities.User, error) {
 
-	newUser := userEntity.User{
+	newUser := entities.User{
 		FirstName: n.FirstName,
 		LastName:  n.LastName,
 		Username:  n.Username,
@@ -39,7 +39,7 @@ func (n *NewUserDTO) FromDTOToModel() (userEntity.User, error) {
 
 	birthDate, err := time.Parse("2006-01-02", n.BirthDate)
 	if err != nil {
-		return userEntity.User{}, err
+		return entities.User{}, err
 	}
 
 	newUser.BirthDate = birthDate

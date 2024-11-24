@@ -2,13 +2,13 @@ package irepositories
 
 import (
 	"github.com/google/uuid"
-	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
 )
 
 // IUserRepo defines the repository interface for user operations.
 type IUserRepo interface {
-	CreateNewUser(newUser userEntity.User) (uuid.UUID, error)
-	GetUserByID(id uuid.UUID) (userEntity.User, error)
-	GetUserByEmail(email string) (userEntity.User, error)
-	GetUserByUsername(username string) (userEntity.User, error)
+	CreateNewUser(newUser entities.User) (uuid.UUID, error)
+	GetUserByID(id uuid.UUID) (entities.User, error)
+	GetUserByEmail(email string) (entities.User, error)
+	GetUserByUsername(username string) (entities.User, error)
 }

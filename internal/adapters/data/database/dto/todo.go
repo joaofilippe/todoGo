@@ -3,12 +3,13 @@ package dto
 import (
 	"time"
 
-	todoEntity "github.com/joaofilippe/todoGo/internal/domain/entities/todo"
+	"github.com/joaofilippe/todoGo/internal/domain/entities"
 )
 
+// TodoDTO represents a Data Transfer Object for Todo.
 type TodoDTO struct {
-	Id          int64
-	UserId      int64
+	ID          int64
+	UserID      int64
 	Title       string
 	Description string
 	CreatedAt   time.Time
@@ -17,15 +18,15 @@ type TodoDTO struct {
 	Status      string
 }
 
-func (d *TodoDTO) ToTodoRepositoryModel(t todoEntity.Todo) {
-	d = &TodoDTO{
-		Id:          t.Id,
-		UserId:      t.UserId,
-		Title:       t.Title,
-		Description: t.Description,
-		CreatedAt:   t.CreatedAt,
-		UpdatedAt:   t.UpdatedAt,
-		Deadline:    t.Deadline,
-		Status:      t.Status.ToString(),
-	}
+// FromEntity converts an entities.Todo to a TodoDTO.
+func (d *TodoDTO) FromEntity(t entities.Todo) {
+	d.ID = t.ID
+	d.UserID = t.UserID
+	d.Title = t.Title
+	d.Description = t.Description
+	d.CreatedAt = t.CreatedAt
+	d.UpdatedAt = t.UpdatedAt
+	d.Deadline = t.Deadline
+	d.Status = t.Status.ToString()
+
 }

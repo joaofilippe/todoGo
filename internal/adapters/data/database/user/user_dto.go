@@ -5,9 +5,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	// "github.com/lib/pq"
 
-	userEntity "github.com/joaofilippe/todoGo/internal/domain/entities/user"
+	entities "github.com/joaofilippe/todoGo/internal/domain/entities"
 	uuid_helper "github.com/joaofilippe/todoGo/pkg/uuid"
 )
 
@@ -27,7 +26,7 @@ type UserDTO struct {
 }
 
 // UserFromDomain is a function that creates a new UserDTO
-func UserFromDomain(u userEntity.User) *UserDTO {
+func UserFromDomain(u entities.User) *UserDTO {
 	return &UserDTO{
 		ID:        u.ID,
 		FirstName: u.FirstName,
@@ -70,8 +69,8 @@ func UserFromDB(user UserDB) *UserDTO {
 }
 
 // ToDomain converts the UserDTO to a User domain model
-func (u *UserDTO) ToDomain() userEntity.User {
-	return userEntity.User{
+func (u *UserDTO) ToDomain() entities.User {
+	return entities.User{
 		ID:        u.ID,
 		FirstName: u.FirstName,
 		LastName:  u.LastName,

@@ -8,11 +8,11 @@ import (
 // Application represents the application
 type Application struct {
 	Logger      *logger.Logger
-	UserService *user_service.UserService
+	UserService *userservice.UserService
 }
 
 // NewApplication creates a new application
-func NewApplication(userService *user_service.UserService, logger *logger.Logger) *Application {
+func NewApplication(userService *userservice.UserService, logger *logger.Logger) *Application {
 	return &Application{
 		UserService: userService,
 	}
