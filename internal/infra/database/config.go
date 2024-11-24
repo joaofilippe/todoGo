@@ -21,13 +21,13 @@ func New(app *config.App) *Connection {
 		return connection
 	}
 
-	masterDB, err := sqlx.Open("postgres", app.GetMasterDsn())
+	masterDB, err := sqlx.Open("postgres", app.MasterDsn())
 	if err != nil {
 		log.Fatalf(err.Error())
 		return connection
 	}
 
-	slaveDB, err := sqlx.Open("postgres", app.GetSlaveDsn())
+	slaveDB, err := sqlx.Open("postgres", app.SlaveDsn())
 	if err != nil {
 		log.Fatalf(err.Error())
 		return connection

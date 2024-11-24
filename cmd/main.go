@@ -15,11 +15,11 @@ import (
 
 func main() {
 	logger := logger.NewLogger()
-	appConfig := config.NewApp(*logger)
+	appConfig := config.New(logger)
 
-	masterConnectionDB := di_connection.GetConnection(logger, appConfig, "master")
+	connection := di_connection.GetConnection(logger, appConfig)
 
-	if err := userMigratons.CreateUsersTable(masterConnectionDB); err != nil {
+	if err := userMigratons.CreateUsersTable(connection); err != nil {
 		logger.Logger.Error(err.Error())
 	}
 

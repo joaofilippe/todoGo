@@ -31,10 +31,11 @@ type UserDatabaseReader struct {
 
 // CreateUser is a function that creates a user
 func (w *UserDatabaseWriter) CreateNewUser(newUser userEntity.User) (uuid.UUID, error) {
+	tx := w.Conn.GetMaster().MustBegin()
 	newUserDB := dto.NewUserFromDomain(newUser)
 
 	_, err :=
-		w.Conn.Connection.Exec(
+		tx.Exec(
 			queries.InsertNewUserQuery,
 			newUserDB.ID,
 			newUserDB.FirstName,
@@ -46,17 +47,20 @@ func (w *UserDatabaseWriter) CreateNewUser(newUser userEntity.User) (uuid.UUID, 
 			true,
 		)
 	if err != nil {
+		tx.Rollback()
 		return uuid.UUID{}, err
 	}
 
+	err = tx.Commit()
 	return newUser.ID, err
 }
 
 // GetUserByID is a function that gets a user by username
 func (r *UserDatabaseReader) GetUserByID(id uuid.UUID) (userEntity.User, error) {
+	tx := r.Conn.GetSlave().MustBegin()
 	var userDB models.UserDB
 
-	err := r.Conn.Connection.Get(&userDB, queries.SelectUserQueryByID, id.String())
+	err := tx.Get(&userDB, queries.SelectUserQueryByID, id.String())
 	if err != nil && err != sql.ErrNoRows {
 		return userEntity.User{}, err
 	}
@@ -66,28 +70,34 @@ func (r *UserDatabaseReader) GetUserByID(id uuid.UUID) (userEntity.User, error) 
 
 // GetUserByEmail is a function that gets a user by username
 func (r *UserDatabaseReader) GetUserByEmail(email string) (userEntity.User, error) {
+	tx := r.Conn.GetSlave().MustBegin()
 	var userDB models.UserDB
 
-	err := r.Conn.Connection.Get(&userDB, queries.SelectUserQueryByEmail, email)
+	err := tx.Get(&userDB, queries.SelectUserQueryByEmail, email)
 	if err == sql.ErrNoRows {
 		return userEntity.User{}, nil
 	}
 
 	if err != nil {
+		tx.Rollback()
 		return userEntity.User{}, err
 	}
 
-	return dto.UserFromDB(userDB).ToDomain(), nil
+	err = tx.Commit()
+	return dto.UserFromDB(userDB).ToDomain(), err
 }
 
 // GetUserByUsername is a function that gets a user by username
 func (r *UserDatabaseReader) GetUserByUsername(username string) (userEntity.User, error) {
+	tx := r.Conn.GetSlave().MustBegin()
 	var userDB models.UserDB
 
-	err := r.Conn.Connection.Get(&userDB, queries.SelectUserQueryByUsername, username)
+	err := tx.Get(&userDB, queries.SelectUserQueryByUsername, username)
 	if err != nil && err != sql.ErrNoRows {
+		tx.Rollback()
 		return userEntity.User{}, err
 	}
 
-	return dto.UserFromDB(userDB).ToDomain(), nil
+	err = tx.Commit()
+	return dto.UserFromDB(userDB).ToDomain(), err
 }
