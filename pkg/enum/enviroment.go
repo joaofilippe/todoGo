@@ -32,6 +32,6 @@ func ParseToEnviroment(env string) Environment {
 	case Production_String, Production_Short:
 		return 3
 	default:
-		return 0
+		return 1
 	}
 }

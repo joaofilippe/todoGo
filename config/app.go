@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v3"
@@ -40,13 +39,13 @@ func New(log *logger.Logger) *App {
 		return app
 	}
 
+	app = &App{
+		Logger: log,
+	}
+
 	envKey := os.Getenv("ENV")
 
-	if strings.EqualFold(envKey, "") {
-		app.env = enum.Development
-	} else {
-		app.env = enum.ParseToEnviroment(os.Getenv("ENV"))
-	}
+	app.env = enum.ParseToEnviroment(envKey)
 
 	app.configPath = "../config"
 

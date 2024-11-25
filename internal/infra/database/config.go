@@ -10,6 +10,7 @@ import (
 
 var connection *Connection
 
+// Connection represents a database connection with master and slave databases.
 type Connection struct {
 	master *sqlx.DB
 	slave  *sqlx.DB
@@ -20,6 +21,8 @@ func New(app *config.App) *Connection {
 	if connection != nil {
 		return connection
 	}
+
+	connection = &Connection{}
 
 	masterDB, err := sqlx.Open("postgres", app.MasterDsn())
 	if err != nil {
